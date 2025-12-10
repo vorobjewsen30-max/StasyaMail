@@ -815,6 +815,17 @@
             line-height: 1.7;
             margin-bottom: 25px;
             color: #555;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .news-full-text {
+            display: none;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #555;
         }
         
         .read-more {
@@ -830,6 +841,9 @@
             align-self: flex-start;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(93, 63, 211, 0.3);
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
         }
         
         .read-more:hover {
@@ -1566,8 +1580,12 @@
                 <div class="app-header">
                     <h2>Погода в Зверяндии</h2>
                     <div class="app-actions">
-                        <select id="citySelect" class="form-control" style="width: 200px;">
+                        <select id="citySelect" class="form-control" style="width: 220px;">
                             <option value="mouskinsk">Мышкинск</option>
+                            <option value="listinsk">Листинск</option>
+                            <option value="kosmos">Космос</option>
+                            <option value="morozhensk">Мороженск</option>
+                            <option value="ulyanovsk">Ульяновск</option>
                             <option value="barsuchye">Барсучье</option>
                             <option value="lisiy-ostrov">Лисий Остров</option>
                             <option value="yozhikovo">Ёжиково</option>
@@ -1688,6 +1706,19 @@
                     <button type="submit" class="btn btn-primary">Сохранить заметку</button>
                 </div>
             </form>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для полной новости -->
+    <div class="modal" id="newsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="newsModalTitle">Новость</h3>
+                <button class="close-modal" id="closeNewsModal">&times;</button>
+            </div>
+            <div id="newsModalContent">
+                <!-- Полный текст новости будет здесь -->
+            </div>
         </div>
     </div>
     
@@ -2126,12 +2157,25 @@
         function initNews() {
             const newsContainer = document.getElementById('newsContainer');
             const refreshNewsBtn = document.getElementById('refreshNews');
+            const newsModal = document.getElementById('newsModal');
+            const closeNewsModal = document.getElementById('closeNewsModal');
+            const newsModalTitle = document.getElementById('newsModalTitle');
+            const newsModalContent = document.getElementById('newsModalContent');
             
             const news = [
                 {
                     id: 1,
                     title: 'Такса Стася начинает строительство нового небоскрёбного комплекса',
-                    content: 'Знаменитая такса-предприниматель Стася сегодня официально объявила о начале строительства нового небоскрёбного комплекса "Звёздная Башня" в центре Мышкинска. Комплекс будет включать в себя 50-этажный бизнес-центр, жилые апартаменты класса люкс и развлекательный комплекс с панорамным видом на город. Строительство планируется завершить к концу следующего года.',
+                    shortContent: 'Знаменитая такса-предприниматель Стася сегодня официально объявила о начале строительства нового небоскрёбного комплекса "Звёздная Башня" в центре Мышкинска. Комплекс будет включать в себя 50-этажный бизнес-центр, жилые апартаменты класса люкс и развлекательный комплекс с панорамным видом на город.',
+                    fullContent: `
+                        <p>Знаменитая такса-предприниматель Стася сегодня официально объявила о начале строительства нового небоскрёбного комплекса "Звёздная Башня" в центре Мышкинска. Комплекс будет включать в себя 50-этажный бизнес-центр, жилые апартаменты класса люкс и развлекательный комплекс с панорамным видом на город. Строительство планируется завершить к концу следующего года.</p>
+                        
+                        <p>По словам Стаси, новый комплекс станет символом прогресса Зверяндии и будет оснащен самыми современными технологиями. "Мы используем экологичные материалы и инновационные строительные методы, чтобы создать не просто здание, а настоящий город будущего", - заявила Стася на пресс-конференции.</p>
+                        
+                        <p>Архитектором проекта выступила знаменитая белка-инженер, которая уже спроектировала несколько известных зданий в Зверяндии. Особенностью комплекса станут вертикальные сады на каждом этаже и система сбора дождевой воды для полива растений.</p>
+                        
+                        <p>Строительство уже началось, и первые этажи планируется сдать в эксплуатацию уже через 8 месяцев. Инвестиции в проект составили более 500 миллионов зверяндских рублей.</p>
+                    `,
                     image: 'https://images.unsplash.com/photo-1487956382158-bb926046304a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
                     date: '2023-10-15',
                     category: 'Строительство',
@@ -2140,7 +2184,16 @@
                 {
                     id: 2,
                     title: 'В Мышкинске открывается крупнейший в Зверяндии парк развлечений',
-                    content: 'В преддверии зимнего сезона в Мышкинске откроется крупнейший в Зверяндии парк развлечений "Снежное Королевство". Парк будет включать в себя ледовый каток олимпийского стандарта, горки для тюбингов длиной до 200 метров и специальную зону для строительства снежных крепостей. Организаторы обещают ежедневные шоу и конкурсы с призами.',
+                    shortContent: 'В преддверии зимнего сезона в Мышкинске откроется крупнейший в Зверяндии парк развлечений "Снежное Королевство". Парк будет включать в себя ледовый каток олимпийского стандарта, горки для тюбингов длиной до 200 метров и специальную зону для строительства снежных крепостей.',
+                    fullContent: `
+                        <p>В преддверии зимнего сезона в Мышкинске откроется крупнейший в Зверяндии парк развлечений "Снежное Королевство". Парк будет включать в себя ледовый каток олимпийского стандарта, горки для тюбингов длиной до 200 метров и специальную зону для строительства снежных крепостей. Организаторы обещают ежедневные шоу и конкурсы с призами.</p>
+                        
+                        <p>Парк займет территорию в 5 гектаров в центре города и будет работать с декабря по март. Особенностью "Снежного Королевства" станет искусственная система оснежения, которая позволит поддерживать идеальное состояние снега даже в теплые дни.</p>
+                        
+                        <p>"Мы хотим, чтобы каждый житель Зверяндии мог насладиться зимними развлечениями независимо от погодных условий", - заявил директор парка, пингвин Игорь. - "У нас будут аттракционы для всех возрастов, от малышей до самых взрослых".</p>
+                        
+                        <p>В парке также откроются несколько тематических кафе, где можно будет попробовать традиционные зимние угощения Зверяндии: горячий сидр из лесных ягод, пироги с грибами и орехами, а также знаменитое мышкинское мороженое.</p>
+                    `,
                     image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w-800&q=80',
                     date: '2023-10-14',
                     category: 'Развлечения',
@@ -2149,7 +2202,16 @@
                 {
                     id: 3,
                     title: 'Фестиваль сыра собрал рекордное количество участников',
-                    content: 'Ежегодный фестиваль сыра в Мышкинске побил все рекорды по посещаемости. В этом году в мероприятии приняли участие более 500 сыроваров со всей Зверяндии. Гран-при фестиваля получил сыр "Мышкинское благородство" от местного производителя. Фестиваль посетили более 50 тысяч гостей, что стало абсолютным рекордом за всю историю проведения мероприятия.',
+                    shortContent: 'Ежегодный фестиваль сыра в Мышкинске побил все рекорды по посещаемости. В этом году в мероприятии приняли участие более 500 сыроваров со всей Зверяндии. Гран-при фестиваля получил сыр "Мышкинское благородство" от местного производителя.',
+                    fullContent: `
+                        <p>Ежегодный фестиваль сыра в Мышкинске побил все рекорды по посещаемости. В этом году в мероприятии приняли участие более 500 сыроваров со всей Зверяндии. Гран-при фестиваля получил сыр "Мышкинское благородство" от местного производителя. Фестиваль посетили более 50 тысяч гостей, что стало абсолютным рекордом за всю историю проведения мероприятия.</p>
+                        
+                        <p>Фестиваль проходил на центральной площади Мышкинска в течение трех дней. Посетители могли попробовать более 1000 сортов сыра, принять участие в мастер-классах по сыроварению и даже научиться делать сырные скульптуры.</p>
+                        
+                        <p>"Мышкинское благородство" - это выдержанный сыр из козьего молока с добавлением местных трав. Он вызревает в специальных погребах в течение 12 месяцев. Этот сыр получил высшие оценки от международного жюри, в которое входили сырные эксперты из разных стран.</p>
+                        
+                        <p>Помимо дегустаций, на фестивале проходили конкурсы на самый большой сыр (победителем стал 150-килограммовый сыр из Барсучья) и на самое оригинальное сырное блюдо. Победитель последнего конкурса приготовил сырный торт с ягодами, который покорил всех членов жюри.</p>
+                    `,
                     image: 'https://images.unsplash.com/photo-1488462237308-ecaa28b729d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
                     date: '2023-10-12',
                     category: 'Культура',
@@ -2157,12 +2219,39 @@
                 },
                 {
                     id: 4,
-                    title: 'Новый транспортный тоннель соединит Мышкинск и Барсучье',
-                    content: 'Власти Зверяндии одобрили проект строительства транспортного тоннеля, который соединит столицу Мышкинск с городом Барсучье. Протяжённость тоннеля составит 15 километров, что сделает его самым длинным в стране. Строительство начнётся в следующем месяце и должно быть завершено через два года. Тоннель значительно улучшит транспортное сообщение между двумя крупнейшими городами Зверяндии.',
-                    image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
-                    date: '2023-10-10',
-                    category: 'Инфраструктура',
-                    author: 'Крот Подземный'
+                    title: 'В Листинске открыли новый научный центр по изучению растений',
+                    shortContent: 'В городе Листинске торжественно открыли новый научный центр "Флора Зверяндии", который будет заниматься изучением редких растений и разработкой новых сельскохозяйственных технологий.',
+                    fullContent: `
+                        <p>В городе Листинске торжественно открыли новый научный центр "Флора Зверяндии", который будет заниматься изучением редких растений и разработкой новых сельскохозяйственных технологий. Центр оснащен современными лабораториями и теплицами с климат-контролем.</p>
+                        
+                        <p>Директор центра, профессор Дубов, заявил: "Наша цель - не только изучать растения, но и создавать новые сорта, которые будут лучше адаптированы к климату Зверяндии. Мы уже работаем над созданием морозоустойчивых фруктовых деревьев и быстрорастущих овощей".</p>
+                        
+                        <p>В центре будут работать более 50 ученых-ботаников со всей страны. Особое внимание будет уделяться сохранению эндемичных видов растений, которые встречаются только в Зверяндии.</p>
+                        
+                        <p>Планируется, что центр также будет проводить образовательные программы для школьников и студентов, чтобы привить молодому поколению интерес к ботанике и экологии.</p>
+                    `,
+                    image: 'https://images.unsplash.com/photo-1417733403748-83bbc7c05140?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    date: '2023-10-13',
+                    category: 'Наука',
+                    author: 'Ёж Учёный'
+                },
+                {
+                    id: 5,
+                    title: 'В Космосе запустили новую космическую программу',
+                    shortContent: 'Город Космос, известный как центр космических исследований Зверяндии, объявил о начале новой космической программы "Звездный путь". В рамках программы планируется запуск нескольких спутников для изучения климата и создание первой зверяндской космической станции.',
+                    fullContent: `
+                        <p>Город Космос, известный как центр космических исследований Зверяндии, объявил о начале новой космической программы "Звездный путь". В рамках программы планируется запуск нескольких спутников для изучения климата и создание первой зверяндской космической станции.</p>
+                        
+                        <p>"Это исторический момент для нашей страны, - заявил главный инженер программы, сурок Василий. - Мы докажем, что даже небольшая страна может достичь больших высот в космических исследованиях".</p>
+                        
+                        <p>Первый запуск спутника запланирован на следующей месяц. Спутник будет оснащен камерами высокого разрешения и метеорологическим оборудованием для мониторинга погодных условий по всей Зверяндии.</p>
+                        
+                        <p>Космическая станция, которую планируется построить в течение пяти лет, будет использоваться для научных экспериментов в условиях невесомости. Уже начат отбор кандидатов в первый зверяндский космический экипаж.</p>
+                    `,
+                    image: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    date: '2023-10-11',
+                    category: 'Космос',
+                    author: 'Космонавт Крот'
                 }
             ];
             
@@ -2183,13 +2272,52 @@
                                     <span><i class="fas fa-tag"></i> ${item.category}</span>
                                     <span><i class="fas fa-user"></i> ${item.author}</span>
                                 </div>
-                                <p class="news-text">${item.content}</p>
+                                <p class="news-text">${item.shortContent}</p>
+                                <div class="news-full-text">${item.fullContent}</div>
                             </div>
-                            <a href="#" class="read-more">Читать далее <i class="fas fa-arrow-right"></i></a>
+                            <button class="read-more" data-id="${item.id}">Читать далее <i class="fas fa-arrow-right"></i></button>
                         </div>
                     `;
                     newsContainer.appendChild(article);
                 });
+                
+                // Добавляем обработчики для кнопок "Читать далее"
+                document.querySelectorAll('.read-more').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const newsId = parseInt(this.getAttribute('data-id'));
+                        const newsItem = news.find(item => item.id === newsId);
+                        
+                        if (newsItem) {
+                            openNewsModal(newsItem);
+                        }
+                    });
+                });
+            }
+            
+            function openNewsModal(newsItem) {
+                newsModalTitle.textContent = newsItem.title;
+                newsModalContent.innerHTML = `
+                    <div class="news-meta" style="margin-bottom: 20px;">
+                        <span><i class="far fa-calendar"></i> ${newsItem.date}</span>
+                        <span><i class="fas fa-tag"></i> ${newsItem.category}</span>
+                        <span><i class="fas fa-user"></i> ${newsItem.author}</span>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <img src="${newsItem.image}" alt="${newsItem.title}" style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
+                    </div>
+                    <div style="line-height: 1.7; color: #555;">
+                        ${newsItem.fullContent}
+                    </div>
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.1);">
+                        <p><strong>Теги:</strong> ${newsItem.category}, Зверяндия, ${newsItem.title.includes('Стася') ? 'Строительство' : 'Новости'}</p>
+                    </div>
+                `;
+                
+                newsModal.classList.add('active');
+            }
+            
+            function closeNewsModalFunc() {
+                newsModal.classList.remove('active');
             }
             
             // Обновление новостей
@@ -2199,6 +2327,16 @@
                     displayNews();
                     this.innerHTML = '<i class="fas fa-sync-alt"></i> Обновить';
                 }, 1000);
+            });
+            
+            // Закрытие модального окна новостей
+            closeNewsModal.addEventListener('click', closeNewsModalFunc);
+            
+            // Закрытие модального окна при клике вне его
+            newsModal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeNewsModalFunc();
+                }
             });
             
             // Инициализация
@@ -2229,6 +2367,82 @@
                         { day: 'Пт', temp: 18, icon: 'fa-cloud-sun' },
                         { day: 'Сб', temp: 21, icon: 'fa-sun' },
                         { day: 'Вс', temp: 22, icon: 'fa-sun' }
+                    ]
+                },
+                'listinsk': {
+                    name: 'Листинск',
+                    temp: 16,
+                    feelsLike: 15,
+                    description: 'Легкий дождь',
+                    icon: 'fa-cloud-rain',
+                    humidity: 80,
+                    wind: 8,
+                    pressure: 1012,
+                    forecast: [
+                        { day: 'Пн', temp: 15, icon: 'fa-cloud-rain' },
+                        { day: 'Вт', temp: 16, icon: 'fa-cloud' },
+                        { day: 'Ср', temp: 17, icon: 'fa-cloud-sun' },
+                        { day: 'Чт', temp: 18, icon: 'fa-sun' },
+                        { day: 'Пт', temp: 19, icon: 'fa-sun' },
+                        { day: 'Сб', temp: 20, icon: 'fa-sun' },
+                        { day: 'Вс', temp: 19, icon: 'fa-cloud-sun' }
+                    ]
+                },
+                'kosmos': {
+                    name: 'Космос',
+                    temp: 22,
+                    feelsLike: 21,
+                    description: 'Ясно',
+                    icon: 'fa-sun',
+                    humidity: 45,
+                    wind: 5,
+                    pressure: 1010,
+                    forecast: [
+                        { day: 'Пн', temp: 23, icon: 'fa-sun' },
+                        { day: 'Вт', temp: 24, icon: 'fa-sun' },
+                        { day: 'Ср', temp: 25, icon: 'fa-sun' },
+                        { day: 'Чт', temp: 24, icon: 'fa-sun' },
+                        { day: 'Пт', temp: 23, icon: 'fa-sun' },
+                        { day: 'Сб', temp: 22, icon: 'fa-sun' },
+                        { day: 'Вс', temp: 21, icon: 'fa-cloud-sun' }
+                    ]
+                },
+                'morozhensk': {
+                    name: 'Мороженск',
+                    temp: 5,
+                    feelsLike: 2,
+                    description: 'Снег',
+                    icon: 'fa-snowflake',
+                    humidity: 85,
+                    wind: 15,
+                    pressure: 1020,
+                    forecast: [
+                        { day: 'Пн', temp: 4, icon: 'fa-snowflake' },
+                        { day: 'Вт', temp: 3, icon: 'fa-snowflake' },
+                        { day: 'Ср', temp: 2, icon: 'fa-snowflake' },
+                        { day: 'Чт', temp: 3, icon: 'fa-cloud' },
+                        { day: 'Пт', temp: 5, icon: 'fa-cloud-sun' },
+                        { day: 'Сб', temp: 6, icon: 'fa-cloud-sun' },
+                        { day: 'Вс', temp: 7, icon: 'fa-cloud-sun' }
+                    ]
+                },
+                'ulyanovsk': {
+                    name: 'Ульяновск',
+                    temp: 14,
+                    feelsLike: 13,
+                    description: 'Пасмурно',
+                    icon: 'fa-cloud',
+                    humidity: 75,
+                    wind: 10,
+                    pressure: 1015,
+                    forecast: [
+                        { day: 'Пн', temp: 13, icon: 'fa-cloud' },
+                        { day: 'Вт', temp: 14, icon: 'fa-cloud-rain' },
+                        { day: 'Ср', temp: 15, icon: 'fa-cloud' },
+                        { day: 'Чт', temp: 16, icon: 'fa-cloud-sun' },
+                        { day: 'Пт', temp: 17, icon: 'fa-sun' },
+                        { day: 'Сб', temp: 18, icon: 'fa-sun' },
+                        { day: 'Вс', temp: 17, icon: 'fa-cloud-sun' }
                     ]
                 },
                 'barsuchye': {
@@ -2393,31 +2607,41 @@
                 recommendationsCard.className = 'weather-card';
                 
                 let recommendations = '';
+                let workStatus = '';
+                let deliveryStatus = '';
+                
                 if (city.temp > 20) {
                     recommendations = 'Идеальная погода для строительных работ! Рекомендуется работать на открытом воздухе и пить больше воды.';
+                    workStatus = 'Рекомендуются';
                 } else if (city.temp > 10) {
                     recommendations = 'Хорошая погода для работы. Можно проводить наружные строительные работы.';
+                    workStatus = 'Рекомендуются';
                 } else if (city.temp > 0) {
                     recommendations = 'Прохладно. Рекомендуется теплая одежда для работы на улице. Проверьте, не замерзают ли строительные материалы.';
+                    workStatus = 'Ограничены';
                 } else {
                     recommendations = 'Холодно. Наружные работы могут быть затруднены. Рекомендуется сосредоточиться на внутренних работах.';
+                    workStatus = 'Ограничены';
                 }
                 
-                if (city.description.includes('дождь')) {
+                if (city.description.includes('дождь') || city.description.includes('снег')) {
                     recommendations += ' Ожидаются осадки, планируйте работы соответственно.';
+                    deliveryStatus = 'Возможны задержки';
+                } else {
+                    deliveryStatus = 'Нормальная';
                 }
                 
                 recommendationsCard.innerHTML = `
                     <h3 style="margin-bottom: 20px; color: var(--primary-color);">Рекомендации для строителей</h3>
                     <p style="color: #555; line-height: 1.7;">${recommendations}</p>
-                    <div style="display: flex; gap: 15px; margin-top: 25px;">
+                    <div style="display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap;">
                         <div style="display: flex; align-items: center; gap: 10px; background: rgba(93, 63, 211, 0.08); padding: 12px 15px; border-radius: 10px;">
                             <i class="fas fa-hard-hat" style="color: var(--primary-color);"></i>
-                            <span>Строительные работы: ${city.temp > 5 ? 'Рекомендуются' : 'Ограничены'}</span>
+                            <span>Строительные работы: ${workStatus}</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px; background: rgba(93, 63, 211, 0.08); padding: 12px 15px; border-radius: 10px;">
                             <i class="fas fa-truck" style="color: var(--primary-color);"></i>
-                            <span>Доставка материалов: ${city.description.includes('дождь') ? 'Возможны задержки' : 'Нормальная'}</span>
+                            <span>Доставка материалов: ${deliveryStatus}</span>
                         </div>
                     </div>
                 `;
