@@ -3,883 +3,2653 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Стася365.рф - Новости Зверяндии</title>
+    <title>Стася 365 - Рабочий портал Зверяндии</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #FF6B8B;
-            --secondary: #6A5AF9;
-            --accent: #00D4AA;
-            --light: #FFFAF0;
-            --dark: #2D3047;
-            --yellow: #FFD166;
-            --blue: #118AB2;
-            --brown: #8B4513;
-            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
-            --gradient-reverse: linear-gradient(135deg, var(--secondary), var(--primary));
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #5D3FD3;
+            --secondary-color: #FF6B9D;
+            --accent-color: #FFD166;
+            --success-color: #06D6A0;
+            --dark-color: #1A1A2E;
+            --light-color: #F8F9FF;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 15px 35px rgba(93, 63, 211, 0.15);
+            --gradient-primary: linear-gradient(135deg, #5D3FD3 0%, #9D4EDD 100%);
+            --gradient-secondary: linear-gradient(135deg, #FF6B9D 0%, #FF8E6B 100%);
+            --gradient-accent: linear-gradient(135deg, #FFD166 0%, #FFB347 100%);
+            --gradient-bg: linear-gradient(135deg, #F8F9FF 0%, #E6E9FF 100%);
         }
         
         body {
-            font-family: 'Nunito', sans-serif;
-            background-color: #f8f9ff;
-            color: #333;
+            background: var(--gradient-bg);
+            color: var(--dark-color);
             line-height: 1.6;
+            min-height: 100vh;
             overflow-x: hidden;
         }
         
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header */
+        /* Стили для шапки */
         header {
-            background: var(--gradient);
+            background: var(--gradient-primary);
             color: white;
-            padding: 1.2rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 5px 20px rgba(106, 90, 249, 0.2);
-        }
-        
-        .header-container {
+            padding: 1.2rem 2.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 5px 20px rgba(93, 63, 211, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .logo {
             display: flex;
             align-items: center;
             gap: 15px;
-            font-family: 'Comfortaa', cursive;
-            font-size: 2rem;
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .logo-icon {
-            background: white;
-            width: 50px;
-            height: 50px;
+            height: 55px;
+            width: 55px;
             border-radius: 50%;
+            background: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo-icon i {
+            font-size: 28px;
+            color: var(--primary-color);
+        }
+        
+        .logo-text h1 {
             font-size: 1.8rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo-text span {
+            color: var(--accent-color);
+            font-weight: 900;
+        }
+        
+        .logo-text p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: 2px;
         }
         
         nav ul {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 25px;
         }
         
         nav a {
             color: white;
             text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            padding: 10px 20px;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        nav a:hover, nav a.active {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-        
-        nav a:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 20px;
-            right: 20px;
-            height: 3px;
-            background: var(--accent);
-            border-radius: 2px;
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-        
-        nav a:hover:after, nav a.active:after {
-            transform: scaleX(1);
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 6rem 0 4rem;
-            background: linear-gradient(135deg, rgba(255, 107, 139, 0.05) 0%, rgba(106, 90, 249, 0.05) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero:before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            right: -100px;
-            width: 400px;
-            height: 400px;
-            background: var(--gradient);
-            border-radius: 50%;
-            opacity: 0.1;
-            z-index: 0;
-        }
-        
-        .hero:after {
-            content: '';
-            position: absolute;
-            bottom: -150px;
-            left: -100px;
-            width: 300px;
-            height: 300px;
-            background: var(--gradient-reverse);
-            border-radius: 50%;
-            opacity: 0.1;
-            z-index: 0;
-        }
-        
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .hero-text h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            line-height: 1.2;
-        }
-        
-        .hero-text p {
-            font-size: 1.3rem;
-            color: #555;
-            margin-bottom: 2rem;
-        }
-        
-        .hero-image {
-            position: relative;
-            text-align: center;
-        }
-        
-        .hero-dog {
-            width: 100%;
-            max-width: 500px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            transform: perspective(1000px) rotateY(-10deg);
-            transition: transform 0.5s ease;
-        }
-        
-        .hero-dog:hover {
-            transform: perspective(1000px) rotateY(0deg);
-        }
-        
-        .dog-name {
-            display: inline-block;
-            background: var(--gradient);
-            color: white;
-            padding: 10px 30px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 1.5rem;
-            margin-top: 20px;
-            box-shadow: 0 10px 20px rgba(255, 107, 139, 0.3);
-        }
-        
-        .btn {
-            display: inline-block;
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 15px 35px;
-            font-size: 1.1rem;
-            font-weight: 700;
+            font-weight: 600;
+            padding: 10px 18px;
             border-radius: 50px;
-            cursor: pointer;
             transition: all 0.3s ease;
-            text-decoration: none;
-            box-shadow: 0 10px 20px rgba(106, 90, 249, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(106, 90, 249, 0.3);
-        }
-        
-        .btn:active {
-            transform: translateY(-2px);
-        }
-        
-        .btn:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-        
-        .btn:hover:after {
-            left: 100%;
-        }
-        
-        /* Services Section */
-        .services {
-            padding: 5rem 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.2rem;
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto 3rem;
-        }
-        
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        
-        .service-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: all 0.4s ease;
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 20px 40px rgba(106, 90, 249, 0.15);
-            border-color: var(--accent);
-        }
-        
-        .service-card:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--gradient);
-        }
-        
-        .service-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, rgba(255, 107, 139, 0.1), rgba(106, 90, 249, 0.1));
-            border-radius: 50%;
-            color: var(--primary);
-            font-size: 2.2rem;
-        }
-        
-        .service-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-        
-        /* News Section */
-        .news-section {
-            padding: 5rem 0;
-            background: linear-gradient(135deg, rgba(0, 212, 170, 0.03) 0%, rgba(255, 214, 102, 0.03) 100%);
-            position: relative;
-        }
-        
-        .news-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 30px;
-            margin-bottom: 2rem;
-        }
-        
-        .news-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-            transition: all 0.4s ease;
-            position: relative;
-        }
-        
-        .news-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-        }
-        
-        .news-img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .news-card:hover .news-img {
-            transform: scale(1.1);
-        }
-        
-        .news-content {
-            padding: 1.8rem;
-        }
-        
-        .news-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--dark);
-            line-height: 1.3;
-        }
-        
-        .news-text {
-            color: #555;
-            margin-bottom: 1.5rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .news-date {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 0.9rem;
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-        
-        /* Developer Info */
-        .developer-info {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            margin-top: 3rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            border-left: 5px solid var(--accent);
-        }
-        
-        .developer-info h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-        
-        .developer-info p {
-            color: #555;
-            margin-bottom: 1rem;
-        }
-        
-        .code-example {
-            background: #f8f9ff;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-top: 1rem;
-            font-family: monospace;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .code-example code {
-            color: var(--secondary);
-            line-height: 1.5;
-        }
-        
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 4rem 0 2rem;
             position: relative;
             overflow: hidden;
         }
         
-        footer:before {
+        nav a::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 5px;
-            background: var(--gradient);
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
         }
         
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
+        nav a:hover::before {
+            transform: translateX(0);
         }
         
-        .footer-logo {
-            font-family: 'Comfortaa', cursive;
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
         }
         
-        .footer-about p {
-            color: #bbb;
+        nav i {
+            font-size: 1.1rem;
+        }
+        
+        /* Контейнер с основным содержимым */
+        .container {
+            display: flex;
+            min-height: calc(100vh - 85px);
+        }
+        
+        /* Боковая панель */
+        .sidebar {
+            width: 280px;
+            background: var(--card-bg);
+            padding: 2rem 1.5rem;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
             margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
         
-        .social-icons {
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 5px 15px rgba(93, 63, 211, 0.3);
+        }
+        
+        .user-info h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+        
+        .user-info p {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 3px;
+        }
+        
+        .app-list {
+            list-style: none;
+            flex-grow: 1;
+        }
+        
+        .app-list li {
+            margin-bottom: 8px;
+        }
+        
+        .app-list a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 20px;
+            text-decoration: none;
+            color: var(--dark-color);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .app-list a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-color);
+            transform: translateX(-10px);
+            transition: transform 0.3s ease;
+        }
+        
+        .app-list a:hover::before, .app-list a.active::before {
+            transform: translateX(0);
+        }
+        
+        .app-list a:hover, .app-list a.active {
+            background: rgba(93, 63, 211, 0.08);
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+        
+        .app-list i {
+            font-size: 1.2rem;
+            width: 25px;
+            text-align: center;
+        }
+        
+        .app-badge {
+            margin-left: auto;
+            background: var(--gradient-secondary);
+            color: white;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        /* Основной контент */
+        .main-content {
+            flex: 1;
+            padding: 2.5rem;
+            overflow-y: auto;
+        }
+        
+        .app-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .app-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Заголовок раздела */
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(93, 63, 211, 0.1);
+        }
+        
+        .app-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .app-header h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 5px;
+            height: 80%;
+            background: var(--gradient-accent);
+            border-radius: 5px;
+        }
+        
+        .app-actions {
             display: flex;
             gap: 15px;
         }
         
-        .social-icon {
+        /* Кнопки */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(93, 63, 211, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(93, 63, 211, 0.4);
+        }
+        
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--primary-color);
+            border: 2px solid rgba(93, 63, 211, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(93, 63, 211, 0.05);
+            border-color: rgba(93, 63, 211, 0.4);
+        }
+        
+        .btn-accent {
+            background: var(--gradient-accent);
+            color: var(--dark-color);
+            box-shadow: 0 5px 15px rgba(255, 209, 102, 0.3);
+        }
+        
+        .btn-accent:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 209, 102, 0.4);
+        }
+        
+        /* Главная страница */
+        .welcome-section {
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            padding: 3rem;
+            color: white;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        .welcome-section::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+        
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .welcome-content h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        
+        .welcome-content p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 45px;
-            height: 45px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: white;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-        
-        .social-icon:hover {
-            background: var(--gradient);
-            transform: translateY(-5px);
-        }
-        
-        .footer-links h3, .footer-contact h3 {
-            font-size: 1.4rem;
+            font-size: 2rem;
             margin-bottom: 1.5rem;
             color: white;
         }
         
-        .footer-links ul {
+        .feature-card:nth-child(1) .feature-icon {
+            background: var(--gradient-primary);
+        }
+        
+        .feature-card:nth-child(2) .feature-icon {
+            background: var(--gradient-secondary);
+        }
+        
+        .feature-card:nth-child(3) .feature-icon {
+            background: var(--gradient-accent);
+        }
+        
+        .feature-card h4 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--dark-color);
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Калькулятор */
+        .calculator-container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .calculator-display {
+            flex: 1;
+            min-width: 350px;
+        }
+        
+        .calculator-screen {
+            background: var(--dark-color);
+            color: white;
+            padding: 25px;
+            border-radius: 18px;
+            text-align: right;
+            margin-bottom: 25px;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            font-family: 'Courier New', monospace;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .calculation {
+            font-size: 1.3rem;
+            color: #aaa;
+            word-break: break-all;
+            min-height: 30px;
+        }
+        
+        .result {
+            font-size: 3rem;
+            font-weight: bold;
+            word-break: break-all;
+            color: var(--accent-color);
+        }
+        
+        .calculator-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        .calc-btn {
+            padding: 22px 10px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--card-bg);
+            color: var(--dark-color);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .calc-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .calc-btn.operator {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        
+        .calc-btn.operator:hover {
+            background: linear-gradient(135deg, #4a30c0 0%, #8c40d0 100%);
+        }
+        
+        .calc-btn.equals {
+            background: var(--gradient-accent);
+            color: var(--dark-color);
+            grid-column: span 2;
+        }
+        
+        .calc-btn.equals:hover {
+            background: linear-gradient(135deg, #ffc145 0%, #ff9e3d 100%);
+        }
+        
+        .calc-btn.clear {
+            background: var(--gradient-secondary);
+            color: white;
+        }
+        
+        .calc-btn.clear:hover {
+            background: linear-gradient(135deg, #ff5a8f 0%, #ff7c5a 100%);
+        }
+        
+        .calculator-history {
+            flex: 1;
+            min-width: 350px;
+        }
+        
+        .history-title {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        
+        .history-list {
             list-style: none;
+            max-height: 400px;
+            overflow-y: auto;
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.03);
         }
         
-        .footer-links li {
-            margin-bottom: 12px;
+        .history-item {
+            padding: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-radius: 10px;
         }
         
-        .footer-links a {
-            color: #bbb;
-            text-decoration: none;
-            transition: color 0.3s ease;
+        .history-item:hover {
+            background: rgba(93, 63, 211, 0.05);
+        }
+        
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .history-expression {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .history-result {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .history-time {
+            color: #888;
+            font-size: 0.85rem;
+        }
+        
+        /* Заметки */
+        .notes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        
+        .note {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            position: relative;
+            border-left: 6px solid var(--accent-color);
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+        
+        .note:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .note-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .note-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--dark-color);
+            padding-bottom: 8px;
+            width: 80%;
+            border-bottom: 2px solid rgba(93, 63, 211, 0.1);
+        }
+        
+        .note-date {
+            font-size: 0.85rem;
+            color: #777;
+            background: rgba(0, 0, 0, 0.03);
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+        
+        .note-content {
+            flex-grow: 1;
+            margin-bottom: 25px;
+            line-height: 1.7;
+            color: #555;
+        }
+        
+        .note-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+        
+        .note-btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 7px;
         }
         
-        .footer-links a:hover {
-            color: var(--accent);
+        .note-btn.edit {
+            background: rgba(93, 63, 211, 0.1);
+            color: var(--primary-color);
         }
         
-        .footer-contact p {
-            color: #bbb;
+        .note-btn.edit:hover {
+            background: rgba(93, 63, 211, 0.2);
+        }
+        
+        .note-btn.delete {
+            background: rgba(255, 107, 157, 0.1);
+            color: var(--secondary-color);
+        }
+        
+        .note-btn.delete:hover {
+            background: rgba(255, 107, 157, 0.2);
+        }
+        
+        .add-note-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: var(--card-bg);
+            color: var(--primary-color);
+            border: 2px dashed rgba(93, 63, 211, 0.3);
+            border-radius: 18px;
+            padding: 30px 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 250px;
+        }
+        
+        .add-note-btn:hover {
+            background: rgba(93, 63, 211, 0.05);
+            border-color: rgba(93, 63, 211, 0.6);
+            transform: translateY(-5px);
+        }
+        
+        .add-note-btn i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+        
+        /* Новости */
+        .news-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .news-article {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-wrap: wrap;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+        
+        .news-article:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .news-image {
+            flex: 1;
+            min-width: 320px;
+            height: 280px;
+            overflow: hidden;
+        }
+        
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .news-article:hover .news-image img {
+            transform: scale(1.05);
+        }
+        
+        .news-content {
+            flex: 2;
+            min-width: 320px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .news-title {
+            font-size: 1.7rem;
+            color: var(--primary-color);
             margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-weight: 800;
+            line-height: 1.3;
         }
         
-        .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #999;
+        .news-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            color: #777;
             font-size: 0.9rem;
         }
         
-        /* Responsive */
-        @media (max-width: 992px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
+        .news-meta span {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        
+        .news-meta i {
+            color: var(--primary-color);
+        }
+        
+        .news-text {
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #555;
+        }
+        
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            align-self: flex-start;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(93, 63, 211, 0.3);
+        }
+        
+        .read-more:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(93, 63, 211, 0.4);
+            gap: 12px;
+        }
+        
+        /* Погода */
+        .weather-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .weather-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+        
+        .weather-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .weather-card.main {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        
+        .weather-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+        
+        .weather-location h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .weather-date {
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+        
+        .weather-icon {
+            font-size: 3.5rem;
+        }
+        
+        .weather-temp {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        
+        .weather-desc {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+        
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: auto;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .detail-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .weather-card:not(.main) .detail-icon {
+            background: rgba(93, 63, 211, 0.08);
+            color: var(--primary-color);
+        }
+        
+        .detail-info h4 {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 3px;
+        }
+        
+        .detail-info p {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .forecast-container {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 10px 5px;
+            margin-top: 20px;
+        }
+        
+        .forecast-day {
+            min-width: 120px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .forecast-day:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .forecast-day-name {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .forecast-icon {
+            font-size: 2.5rem;
+            margin: 10px 0;
+            color: var(--primary-color);
+        }
+        
+        .forecast-temp {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 5px;
+        }
+        
+        /* Календарь */
+        .calendar-container {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .calendar-month {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .calendar-nav button {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: rgba(93, 63, 211, 0.08);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .calendar-nav button:hover {
+            background: rgba(93, 63, 211, 0.15);
+        }
+        
+        .calendar-weekdays, .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        
+        .calendar-weekdays div {
+            text-align: center;
+            font-weight: 700;
+            color: var(--primary-color);
+            padding: 15px 0;
+        }
+        
+        .calendar-days div {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .calendar-days div:hover {
+            background: rgba(93, 63, 211, 0.08);
+        }
+        
+        .calendar-days div.today {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(93, 63, 211, 0.3);
+        }
+        
+        .calendar-days div.event::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            width: 6px;
+            height: 6px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+        }
+        
+        .calendar-events {
+            margin-top: 30px;
+        }
+        
+        .event-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(93, 63, 211, 0.05);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .event-item:hover {
+            background: rgba(93, 63, 211, 0.1);
+        }
+        
+        .event-time {
+            font-weight: 700;
+            color: var(--primary-color);
+            min-width: 70px;
+        }
+        
+        .event-title {
+            font-weight: 600;
+            flex-grow: 1;
+        }
+        
+        /* Контакты */
+        .contacts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .contact-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .contact-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(93, 63, 211, 0.3);
+        }
+        
+        .contact-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .contact-role {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding: 5px 15px;
+            background: rgba(93, 63, 211, 0.08);
+            border-radius: 20px;
+        }
+        
+        .contact-info {
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .contact-item:last-child {
+            border-bottom: none;
+        }
+        
+        .contact-item i {
+            color: var(--primary-color);
+            width: 25px;
+        }
+        
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(93, 63, 211, 0.1);
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+        
+        .close-modal {
+            background: rgba(93, 63, 211, 0.1);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            background: rgba(93, 63, 211, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(93, 63, 211, 0.1);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--card-bg);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(93, 63, 211, 0.1);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Футер */
+        footer {
+            background: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        footer p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        
+        .footer-logo {
+            color: var(--accent-color);
+            font-weight: 800;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
             }
             
-            .hero-text h1 {
-                font-size: 2.8rem;
+            .sidebar {
+                width: 100%;
+                padding: 1.5rem;
             }
             
-            .section-title {
-                font-size: 2.4rem;
+            .app-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
             }
             
-            .news-container {
-                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            .app-list li {
+                margin-bottom: 0;
+            }
+            
+            .app-list a {
+                padding: 12px 20px;
             }
         }
         
-        @media (max-width: 768px) {
-            .header-container {
+        @media (max-width: 992px) {
+            header {
                 flex-direction: column;
                 gap: 20px;
+                padding: 1.5rem;
             }
             
             nav ul {
                 flex-wrap: wrap;
                 justify-content: center;
-                gap: 15px;
             }
             
-            .hero-text h1 {
-                font-size: 2.2rem;
+            .main-content {
+                padding: 1.5rem;
             }
             
-            .section-title {
+            .calculator-container, .news-article {
+                flex-direction: column;
+            }
+            
+            .calculator-display, .calculator-history {
+                min-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .weather-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .welcome-section {
+                padding: 2rem;
+            }
+            
+            .welcome-content h3 {
                 font-size: 2rem;
             }
+        }
+        
+        /* Скроллбар */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(93, 63, 211, 0.3);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(93, 63, 211, 0.5);
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
-        <div class="container header-container">
-            <div class="logo">
-                <div class="logo-icon">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-paw"></i>
+            </div>
+            <div class="logo-text">
+                <h1>Стася <span>365</span></h1>
+                <p>Рабочий портал Зверяндии</p>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="nav-link active" data-section="home"><i class="fas fa-home"></i> Главная</a></li>
+                <li><a href="#" class="nav-link" data-section="calculator"><i class="fas fa-calculator"></i> Калькулятор</a></li>
+                <li><a href="#" class="nav-link" data-section="notes"><i class="fas fa-sticky-note"></i> Заметки</a></li>
+                <li><a href="#" class="nav-link" data-section="news"><i class="fas fa-newspaper"></i> Новости</a></li>
+                <li><a href="#" class="nav-link" data-section="weather"><i class="fas fa-cloud-sun"></i> Погода</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <aside class="sidebar">
+            <div class="user-profile">
+                <div class="user-avatar">
                     <i class="fas fa-dog"></i>
                 </div>
-                <span>Стася365.рф</span>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="active">Главная</a></li>
-                    <li><a href="#services">Сервисы</a></li>
-                    <li><a href="#news">Новости</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Новости Зверяндии с собакой Стасей</h1>
-                    <p>Добро пожаловать на самый уютный сайт о животных! Здесь вы найдете самые свежие новости из мира наших пушистых друзей, интересные факты и полезные советы по уходу за питомцами.</p>
-                    <a href="#news" class="btn">Читать новости <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Собака Стася" class="hero-dog">
-                    <div class="dog-name">Стася - главная героиня</div>
+                <div class="user-info">
+                    <h3>Такса Стася</h3>
+                    <p>Строительный магнат</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="services">
-        <div class="container">
-            <h2 class="section-title">Наши сервисы</h2>
-            <p class="section-subtitle">Мы предлагаем множество полезных сервисов для владельцев животных и всех, кто любит наших пушистых друзей</p>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-newspaper"></i>
+            <ul class="app-list">
+                <li><a href="#" class="app-link active" data-section="home"><i class="fas fa-home"></i> Главная</a></li>
+                <li><a href="#" class="app-link" data-section="calculator"><i class="fas fa-calculator"></i> Калькулятор <span class="app-badge">PRO</span></a></li>
+                <li><a href="#" class="app-link" data-section="notes"><i class="fas fa-sticky-note"></i> Заметки</a></li>
+                <li><a href="#" class="app-link" data-section="news"><i class="fas fa-newspaper"></i> Новости</a></li>
+                <li><a href="#" class="app-link" data-section="weather"><i class="fas fa-cloud-sun"></i> Погода</a></li>
+                <li><a href="#" class="app-link" data-section="calendar"><i class="fas fa-calendar-alt"></i> Календарь</a></li>
+                <li><a href="#" class="app-link" data-section="contacts"><i class="fas fa-address-book"></i> Контакты</a></li>
+                <li><a href="#" class="app-link" data-section="settings"><i class="fas fa-cog"></i> Настройки</a></li>
+            </ul>
+        </aside>
+        
+        <main class="main-content">
+            <!-- Главная страница -->
+            <section id="home" class="app-section active">
+                <div class="welcome-section">
+                    <div class="welcome-content">
+                        <h3>Добро пожаловать!</h3>
+                        <p>Ваш персональный портал для работы и управления проектами. Здесь вы найдете все необходимые инструменты для успешного строительства нового небоскрёбного комплекса в Мышкинске.</p>
+                        <button class="btn btn-accent"><i class="fas fa-rocket"></i> Начать работу</button>
                     </div>
-                    <h3>Свежие новости</h3>
-                    <p>Ежедневные обновления из мира животных, интересные события и важные открытия.</p>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-stethoscope"></i>
+                
+                <div class="app-header">
+                    <h2>Основные функции</h2>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h4>Профессиональный калькулятор</h4>
+                        <p>Мощный инструмент для сложных вычислений с историей операций и расширенными функциями для строительных расчетов.</p>
+                        <a href="#" class="btn btn-secondary" data-section="calculator">Открыть</a>
                     </div>
-                    <h3>Ветеринарные советы</h3>
-                    <p>Рекомендации по здоровью, питанию и уходу за домашними питомцами от специалистов.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-paw"></i>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-sticky-note"></i>
+                        </div>
+                        <h4>Умные заметки</h4>
+                        <p>Создавайте, редактируйте и организуйте ваши заметки. Все данные сохраняются автоматически.</p>
+                        <a href="#" class="btn btn-secondary" data-section="notes">Открыть</a>
                     </div>
-                    <h3>Дрессировка</h3>
-                    <p>Эффективные методики воспитания и дрессировки собак и других домашних животных.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-hands-helping"></i>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cloud-sun"></i>
+                        </div>
+                        <h4>Погода в Зверяндии</h4>
+                        <p>Актуальный прогноз погоды для всех городов Зверяндии. Планируйте строительные работы с учетом погодных условий.</p>
+                        <a href="#" class="btn btn-secondary" data-section="weather">Открыть</a>
                     </div>
-                    <h3>Помощь приютам</h3>
-                    <p>Информация о помощи животным в приютах, волонтерских программах и благотворительных акциях.</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- News Section -->
-    <section id="news" class="news-section">
-        <div class="container">
-            <h2 class="section-title">Последние новости Зверяндии</h2>
-            <p class="section-subtitle">Самые интересные и важные события из мира животных</p>
-            <div class="news-container" id="news-container">
-                <!-- Новости будут добавляться с помощью скрипта -->
-            </div>
+            </section>
             
-            <!-- Информация для разработчика -->
-            <div class="developer-info">
-                <h3><i class="fas fa-code"></i> Для добавления новостей используйте консоль браузера:</h3>
-                <p>Откройте консоль разработчика (F12) и выполните команду:</p>
-                <div class="code-example">
-                    <code>addNews("Заголовок новости", "https://ссылка-на-изображение.jpg", "Текст новости");</code>
-                </div>
-                <p>Новости сохраняются в localStorage браузера и будут отображаться при следующем посещении сайта.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-about">
-                    <div class="footer-logo">Стася365.рф</div>
-                    <p>Самый уютный сайт о животных с ежедневными новостями из мира наших пушистых друзей. Присоединяйтесь к нашему сообществу любителей животных!</p>
-                    <div class="social-icons">
-                        <a href="#" class="social-icon"><i class="fab fa-vk"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-telegram"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <!-- Калькулятор -->
+            <section id="calculator" class="app-section">
+                <div class="app-header">
+                    <h2>Профессиональный калькулятор</h2>
+                    <div class="app-actions">
+                        <button class="btn btn-secondary" id="clearHistory"><i class="fas fa-trash"></i> Очистить историю</button>
+                        <button class="btn btn-primary" id="advancedToggle"><i class="fas fa-sliders-h"></i> Расширенный режим</button>
                     </div>
                 </div>
-                <div class="footer-links">
-                    <h3>Быстрые ссылки</h3>
-                    <ul>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Главная</a></li>
-                        <li><a href="#services"><i class="fas fa-chevron-right"></i> Наши сервисы</a></li>
-                        <li><a href="#news"><i class="fas fa-chevron-right"></i> Новости</a></li>
-                    </ul>
+                <div class="calculator-container">
+                    <div class="calculator-display">
+                        <div class="calculator-screen">
+                            <div class="calculation" id="calculation">0</div>
+                            <div class="result" id="result">0</div>
+                        </div>
+                        <div class="calculator-buttons" id="basicButtons">
+                            <button class="calc-btn clear" data-action="clear">C</button>
+                            <button class="calc-btn operator" data-action="backspace">⌫</button>
+                            <button class="calc-btn operator" data-action="%">%</button>
+                            <button class="calc-btn operator" data-action="/">/</button>
+                            
+                            <button class="calc-btn" data-action="7">7</button>
+                            <button class="calc-btn" data-action="8">8</button>
+                            <button class="calc-btn" data-action="9">9</button>
+                            <button class="calc-btn operator" data-action="*">×</button>
+                            
+                            <button class="calc-btn" data-action="4">4</button>
+                            <button class="calc-btn" data-action="5">5</button>
+                            <button class="calc-btn" data-action="6">6</button>
+                            <button class="calc-btn operator" data-action="-">-</button>
+                            
+                            <button class="calc-btn" data-action="1">1</button>
+                            <button class="calc-btn" data-action="2">2</button>
+                            <button class="calc-btn" data-action="3">3</button>
+                            <button class="calc-btn operator" data-action="+">+</button>
+                            
+                            <button class="calc-btn" data-action="0">0</button>
+                            <button class="calc-btn" data-action=".">.</button>
+                            <button class="calc-btn equals" data-action="=">=</button>
+                        </div>
+                        <div class="calculator-buttons" id="advancedButtons" style="display: none; margin-top: 15px;">
+                            <button class="calc-btn operator" data-action="sqrt">√</button>
+                            <button class="calc-btn operator" data-action="square">x²</button>
+                            <button class="calc-btn operator" data-action="power">x^y</button>
+                            <button class="calc-btn operator" data-action="pi">π</button>
+                            <button class="calc-btn operator" data-action="sin">sin</button>
+                            <button class="calc-btn operator" data-action="cos">cos</button>
+                            <button class="calc-btn operator" data-action="tan">tan</button>
+                            <button class="calc-btn operator" data-action="log">log</button>
+                        </div>
+                    </div>
+                    <div class="calculator-history">
+                        <h3 class="history-title">История вычислений</h3>
+                        <ul class="history-list" id="historyList">
+                            <!-- История будет добавляться сюда -->
+                        </ul>
+                    </div>
                 </div>
-                <div class="footer-contact">
-                    <h3>Контакты</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> г. Зверяндия, ул. Собачья, 25</p>
-                    <p><i class="fas fa-phone"></i> +7 (900) 365-00-00</p>
-                    <p><i class="fas fa-envelope"></i> info@стася365.рф</p>
-                    <p><i class="fas fa-dog"></i> Стася - главная собака сайта</p>
+            </section>
+            
+            <!-- Заметки -->
+            <section id="notes" class="app-section">
+                <div class="app-header">
+                    <h2>Мои заметки</h2>
+                    <button class="btn btn-primary" id="addNoteBtn"><i class="fas fa-plus"></i> Добавить заметку</button>
                 </div>
+                <div class="notes-container" id="notesContainer">
+                    <!-- Заметки будут добавляться сюда -->
+                </div>
+            </section>
+            
+            <!-- Новости -->
+            <section id="news" class="app-section">
+                <div class="app-header">
+                    <h2>Новости Зверяндии</h2>
+                    <div class="app-actions">
+                        <button class="btn btn-secondary" id="refreshNews"><i class="fas fa-sync-alt"></i> Обновить</button>
+                    </div>
+                </div>
+                <div class="news-container" id="newsContainer">
+                    <!-- Новости будут добавляться сюда -->
+                </div>
+            </section>
+            
+            <!-- Погода -->
+            <section id="weather" class="app-section">
+                <div class="app-header">
+                    <h2>Погода в Зверяндии</h2>
+                    <div class="app-actions">
+                        <select id="citySelect" class="form-control" style="width: 200px;">
+                            <option value="mouskinsk">Мышкинск</option>
+                            <option value="barsuchye">Барсучье</option>
+                            <option value="lisiy-ostrov">Лисий Остров</option>
+                            <option value="yozhikovo">Ёжиково</option>
+                            <option value="zaichiy-gorod">Заячий Город</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="weather-container" id="weatherContainer">
+                    <!-- Погода будет добавляться сюда -->
+                </div>
+            </section>
+            
+            <!-- Календарь -->
+            <section id="calendar" class="app-section">
+                <div class="app-header">
+                    <h2>Календарь</h2>
+                    <div class="app-actions">
+                        <button class="btn btn-primary" id="addEventBtn"><i class="fas fa-plus"></i> Добавить событие</button>
+                    </div>
+                </div>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <div class="calendar-month" id="currentMonth">Октябрь 2023</div>
+                        <div class="calendar-nav">
+                            <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                            <button id="todayBtn">Сегодня</button>
+                            <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="calendar-weekdays">
+                        <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
+                    </div>
+                    <div class="calendar-days" id="calendarDays">
+                        <!-- Дни календаря будут добавляться сюда -->
+                    </div>
+                    <div class="calendar-events">
+                        <h3 style="margin-bottom: 20px; color: var(--primary-color);">События на сегодня</h3>
+                        <div id="todayEvents">
+                            <!-- События на сегодня -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Контакты -->
+            <section id="contacts" class="app-section">
+                <div class="app-header">
+                    <h2>Контакты</h2>
+                    <button class="btn btn-primary" id="addContactBtn"><i class="fas fa-user-plus"></i> Добавить контакт</button>
+                </div>
+                <div class="contacts-container" id="contactsContainer">
+                    <!-- Контакты будут добавляться сюда -->
+                </div>
+            </section>
+            
+            <!-- Настройки -->
+            <section id="settings" class="app-section">
+                <div class="app-header">
+                    <h2>Настройки</h2>
+                </div>
+                <div class="calendar-container">
+                    <h3 style="margin-bottom: 25px; color: var(--primary-color);">Настройки портала</h3>
+                    <div class="form-group">
+                        <label>Тема оформления</label>
+                        <select class="form-control" id="themeSelect">
+                            <option value="light">Светлая</option>
+                            <option value="dark">Темная</option>
+                            <option value="auto">Авто</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Язык интерфейса</label>
+                        <select class="form-control">
+                            <option>Русский</option>
+                            <option>Английский</option>
+                            <option>Зверяндский</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Уведомления</label>
+                        <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 10px;">
+                            <label style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox" checked> Новости Зверяндии
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox" checked> Погодные предупреждения
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox"> Напоминания о событиях
+                            </label>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" style="margin-top: 20px;">Сохранить настройки</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Модальное окно для заметок -->
+    <div class="modal" id="noteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Новая заметка</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
             </div>
-            <div class="copyright">
-                &copy; 2023 Стася365.рф - Новости Зверяндии. Все права защищены. <br>
-                Сайт создан с любовью к животным <i class="fas fa-heart" style="color: var(--primary);"></i>
-            </div>
+            <form id="noteForm">
+                <input type="hidden" id="noteId">
+                <div class="form-group">
+                    <label for="noteTitle">Заголовок</label>
+                    <input type="text" id="noteTitle" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="noteContent">Содержание</label>
+                    <textarea id="noteContent" class="form-control" required></textarea>
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px;">
+                    <button type="button" class="btn btn-secondary" id="cancelNote">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить заметку</button>
+                </div>
+            </form>
         </div>
+    </div>
+    
+    <footer>
+        <p>© 2023 <span class="footer-logo">Стася 365</span>. Рабочий портал для жителей Зверяндии.</p>
+        <p style="margin-top: 10px; font-size: 0.9rem; opacity: 0.7;">Город Мышкинск, Проспект Строителей, 1. Все права защищены.</p>
     </footer>
 
     <script>
-        // Массив для хранения новостей
-        let newsArray = [
-            {
-                title: "Стася научилась новой команде!",
-                photo: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                text: "Наша любимая собака Стася освоила новую команду 'Принеси тапочки'. Теперь она с радостью помогает своим хозяевам по дому. Дрессировщики отмечают необычайную сообразительность собаки.",
-                date: "18 октября 2023"
-            },
-            {
-                title: "В Зверяндии открылся новый парк для собак",
-                photo: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                text: "В центре Зверяндии открылся новый современный парк для собак с площадками для тренировок, препятствиями и зоной для щенков. Владельцы животных уже оценили удобства нового пространства.",
-                date: "15 октября 2023"
-            },
-            {
-                title: "Ученые обнаружили новый вид пушистых млекопитающих",
-                photo: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                text: "Исследователи из Зверяндийского университета обнаружили в отдаленных лесах новый вид небольших пушистых млекопитающих. Животное получило название 'Зверяндийский пушистик'.",
-                date: "10 октября 2023"
-            }
-        ];
-
-        // Функция для отображения новостей
-        function displayNews() {
-            const newsContainer = document.getElementById('news-container');
-            newsContainer.innerHTML = '';
-            
-            if (newsArray.length === 0) {
-                newsContainer.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-                        <i class="fas fa-newspaper" style="font-size: 4rem; color: #ddd; margin-bottom: 1rem;"></i>
-                        <h3 style="color: #777;">Новостей пока нет</h3>
-                        <p>Добавьте первую новость через консоль браузера!</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            newsArray.forEach(news => {
-                const newsCard = document.createElement('div');
-                newsCard.className = 'news-card';
-                newsCard.innerHTML = `
-                    <div style="overflow: hidden;">
-                        <img src="${news.photo}" alt="${news.title}" class="news-img">
-                    </div>
-                    <div class="news-content">
-                        <h3 class="news-title">${news.title}</h3>
-                        <p class="news-text">${news.text}</p>
-                        <p class="news-date"><i class="far fa-calendar-alt"></i> ${news.date}</p>
-                    </div>
-                `;
-                newsContainer.appendChild(newsCard);
-            });
-        }
-
-        // Функция для добавления новости (доступна из консоли)
-        function addNews(title, photo, text) {
-            if (!title || !photo || !text) {
-                console.error("Ошибка: нужно указать все параметры: addNews('Заголовок', 'URL фото', 'Текст')");
-                return;
-            }
-            
-            const date = new Date().toLocaleDateString('ru-RU', {
+        // Текущая дата и время
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
                 day: 'numeric',
-                month: 'long',
-                year: 'numeric'
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            // Обновляем дату в боковой панели
+            const dateElements = document.querySelectorAll('.date-display');
+            dateElements.forEach(el => {
+                if (el) el.textContent = now.toLocaleDateString('ru-RU', options);
             });
-            
-            // Добавляем новость в начало массива
-            newsArray.unshift({
-                title: title,
-                photo: photo,
-                text: text,
-                date: date
-            });
-            
-            // Обновляем отображение
-            displayNews();
-            
-            // Сохраняем в localStorage
-            localStorage.setItem('stasya-news', JSON.stringify(newsArray));
-            
-            // Показываем сообщение в консоли
-            console.log(`✅ Новость добавлена: "${title}"`);
-            
-            // Прокручиваем к новостям
-            document.getElementById('news').scrollIntoView({ behavior: 'smooth' });
         }
-
-        // Функция для удаления всех новостей (для разработки)
-        function clearAllNews() {
-            if (confirm("Удалить все новости?")) {
-                newsArray = [];
-                displayNews();
-                localStorage.removeItem('stasya-news');
-                console.log("Все новости удалены");
-            }
-        }
-
-        // Функция для генерации тестовых новостей
-        function generateTestNews() {
-            const testNews = [
-                {
-                    title: "Стася победила на выставке собак",
-                    photo: "https://images.unsplash.com/photo-1554456854-55a089fd4cb2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    text: "Наша звезда Стася завоевала первое место на ежегодной выставке собак в Зверяндии. Судьи отметили ее прекрасную внешность и отличное поведение.",
-                    date: "20 октября 2023"
-                },
-                {
-                    title: "Новый рекорд по количеству собак на прогулке",
-                    photo: "https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    text: "В Зверяндии установлен новый рекорд: 250 собак одновременно вышли на совместную прогулку в городском парке. Мероприятие прошло успешно и без происшествий.",
-                    date: "19 октября 2023"
+        
+        // Навигация между разделами
+        document.querySelectorAll('.nav-link, .app-link, .btn[data-section]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sectionId = this.getAttribute('data-section');
+                
+                // Обновляем активные элементы навигации
+                document.querySelectorAll('.nav-link, .app-link').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                if (this.classList.contains('nav-link') || this.classList.contains('app-link')) {
+                    this.classList.add('active');
+                } else {
+                    // Если нажата кнопка с data-section, находим соответствующий элемент навигации
+                    const navLink = document.querySelector(`.nav-link[data-section="${sectionId}"], .app-link[data-section="${sectionId}"]`);
+                    if (navLink) navLink.classList.add('active');
                 }
-            ];
-            
-            testNews.forEach(news => {
-                addNews(news.title, news.photo, news.text);
+                
+                // Показываем выбранный раздел
+                document.querySelectorAll('.app-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(sectionId).classList.add('active');
             });
-        }
-
-        // Делаем функции доступными глобально
-        window.addNews = addNews;
-        window.clearAllNews = clearAllNews;
-        window.generateTestNews = generateTestNews;
-
-        // Инициализация при загрузке страницы
+        });
+        
+        // Инициализация при загрузке
         document.addEventListener('DOMContentLoaded', function() {
-            // Загружаем новости из localStorage, если они есть
-            const savedNews = localStorage.getItem('stasya-news');
-            if (savedNews) {
-                try {
-                    newsArray = JSON.parse(savedNews);
-                } catch (e) {
-                    console.error('Ошибка загрузки новостей:', e);
+            updateDateTime();
+            initCalculator();
+            initNotes();
+            initNews();
+            initWeather();
+            initCalendar();
+            initContacts();
+            
+            // Обновляем время каждую минуту
+            setInterval(updateDateTime, 60000);
+            
+            // Переключение расширенного режима калькулятора
+            document.getElementById('advancedToggle').addEventListener('click', function() {
+                const advancedButtons = document.getElementById('advancedButtons');
+                const isAdvanced = advancedButtons.style.display === 'grid';
+                advancedButtons.style.display = isAdvanced ? 'none' : 'grid';
+                this.innerHTML = isAdvanced ? 
+                    '<i class="fas fa-sliders-h"></i> Расширенный режим' : 
+                    '<i class="fas fa-times"></i> Основной режим';
+            });
+            
+            // Выбор темы
+            document.getElementById('themeSelect').addEventListener('change', function() {
+                const theme = this.value;
+                if (theme === 'dark') {
+                    document.documentElement.style.setProperty('--light-color', '#1A1A2E');
+                    document.documentElement.style.setProperty('--dark-color', '#F8F9FF');
+                    document.documentElement.style.setProperty('--card-bg', 'rgba(26, 26, 46, 0.9)');
+                    document.documentElement.style.setProperty('--gradient-bg', 'linear-gradient(135deg, #0F0F1A 0%, #1A1A2E 100%)');
+                } else {
+                    // Возвращаем светлую тему
+                    document.documentElement.style.setProperty('--light-color', '#F8F9FF');
+                    document.documentElement.style.setProperty('--dark-color', '#1A1A2E');
+                    document.documentElement.style.setProperty('--card-bg', 'rgba(255, 255, 255, 0.95)');
+                    document.documentElement.style.setProperty('--gradient-bg', 'linear-gradient(135deg, #F8F9FF 0%, #E6E9FF 100%)');
                 }
+            });
+        });
+        
+        // ==================== КАЛЬКУЛЯТОР ====================
+        function initCalculator() {
+            let calculation = '';
+            let result = '0';
+            let history = [];
+            
+            const calculationDisplay = document.getElementById('calculation');
+            const resultDisplay = document.getElementById('result');
+            const historyList = document.getElementById('historyList');
+            const clearHistoryBtn = document.getElementById('clearHistory');
+            
+            function updateCalculatorDisplay() {
+                calculationDisplay.textContent = calculation || '0';
+                resultDisplay.textContent = result;
             }
             
-            displayNews();
-            
-            // Плавная прокрутка для навигации
-            document.querySelectorAll('nav a, .btn').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    if(this.getAttribute('href') && this.getAttribute('href').startsWith('#')) {
-                        e.preventDefault();
-                        const targetId = this.getAttribute('href');
-                        if(targetId === '#') return;
-                        
-                        const targetElement = document.querySelector(targetId);
-                        if(targetElement) {
-                            targetElement.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'start'
-                            });
-                        }
+            function calculateResult() {
+                try {
+                    // Заменяем символы для корректного вычисления
+                    let expr = calculation
+                        .replace(/×/g, '*')
+                        .replace(/÷/g, '/')
+                        .replace(/%/g, '/100')
+                        .replace(/π/g, Math.PI.toString())
+                        .replace(/√(\d+)/g, 'Math.sqrt($1)')
+                        .replace(/(\d+)\^(\d+)/g, 'Math.pow($1, $2)')
+                        .replace(/sin\(/g, 'Math.sin(')
+                        .replace(/cos\(/g, 'Math.cos(')
+                        .replace(/tan\(/g, 'Math.tan(')
+                        .replace(/log\(/g, 'Math.log10(');
+                    
+                    // Обработка x²
+                    expr = expr.replace(/(\d+)²/g, 'Math.pow($1, 2)');
+                    
+                    // Вычисление
+                    const calculated = eval(expr);
+                    
+                    // Форматирование результата
+                    if (Number.isInteger(calculated)) {
+                        result = calculated.toString();
+                    } else {
+                        result = parseFloat(calculated.toFixed(10)).toString();
                     }
+                    
+                    // Добавляем в историю
+                    const historyItem = {
+                        expression: calculation,
+                        result: result,
+                        timestamp: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })
+                    };
+                    
+                    history.unshift(historyItem);
+                    updateHistoryDisplay();
+                    
+                    // Ограничиваем историю 15 последними записями
+                    if (history.length > 15) {
+                        history.pop();
+                    }
+                    
+                    // Сохраняем историю в localStorage
+                    localStorage.setItem('calculatorHistory', JSON.stringify(history));
+                } catch (error) {
+                    result = 'Ошибка';
+                }
+                updateCalculatorDisplay();
+            }
+            
+            function updateHistoryDisplay() {
+                historyList.innerHTML = '';
+                history.forEach(item => {
+                    const li = document.createElement('li');
+                    li.className = 'history-item';
+                    li.innerHTML = `
+                        <div>
+                            <div class="history-expression">${item.expression}</div>
+                            <div class="history-result">= ${item.result}</div>
+                        </div>
+                        <div class="history-time">${item.timestamp}</div>
+                    `;
+                    historyList.appendChild(li);
+                });
+            }
+            
+            // Загрузка истории из localStorage
+            const savedHistory = localStorage.getItem('calculatorHistory');
+            if (savedHistory) {
+                history = JSON.parse(savedHistory);
+                updateHistoryDisplay();
+            } else {
+                // Создаем примеры в истории
+                history = [
+                    { expression: '25 × 4', result: '100', timestamp: '10:15' },
+                    { expression: '1500 ÷ 3', result: '500', timestamp: '09:45' },
+                    { expression: '√144', result: '12', timestamp: '09:30' },
+                    { expression: '5² + 3²', result: '34', timestamp: '09:20' }
+                ];
+                updateHistoryDisplay();
+            }
+            
+            // Обработчики кнопок калькулятора
+            document.querySelectorAll('.calc-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const action = this.getAttribute('data-action');
+                    
+                    if (action === 'clear') {
+                        calculation = '';
+                        result = '0';
+                    } else if (action === 'backspace') {
+                        calculation = calculation.slice(0, -1);
+                    } else if (action === '=') {
+                        calculateResult();
+                        return;
+                    } else if (['+', '-', '*', '/', '%', 'sqrt', 'square', 'power', 'pi', 'sin', 'cos', 'tan', 'log'].includes(action)) {
+                        if (calculation === '' && !['-', 'sqrt', 'sin', 'cos', 'tan', 'log', 'pi'].includes(action)) return;
+                        
+                        // Преобразуем символы для отображения
+                        let displayAction = action;
+                        if (action === '*') displayAction = '×';
+                        if (action === '/') displayAction = '÷';
+                        if (action === 'sqrt') displayAction = '√';
+                        if (action === 'square') displayAction = '²';
+                        if (action === 'power') displayAction = '^';
+                        
+                        // Добавляем скобки для тригонометрических функций и логарифма
+                        if (['sin', 'cos', 'tan', 'log'].includes(action)) {
+                            calculation += action + '(';
+                        } else {
+                            calculation += displayAction;
+                        }
+                    } else {
+                        // Числа и точка
+                        if (action === '.' && calculation.includes('.')) {
+                            // Не допускаем несколько точек подряд
+                            const lastNum = calculation.split(/[\+\-\*\/]/).pop();
+                            if (lastNum.includes('.')) return;
+                        }
+                        
+                        calculation += action;
+                    }
+                    
+                    updateCalculatorDisplay();
                 });
             });
             
-            // Информация в консоли
-            console.log("🌐 Добро пожаловать на Стася365.рф!");
-            console.log("📝 Для добавления новости используйте команду: addNews('Заголовок', 'URL фото', 'Текст')");
-            console.log("🧪 Для теста: generateTestNews() - добавит тестовые новости");
-            console.log("🗑️  Для очистки: clearAllNews() - удалит все новости");
-        });
+            // Очистка истории
+            clearHistoryBtn.addEventListener('click', function() {
+                history = [];
+                updateHistoryDisplay();
+                localStorage.removeItem('calculatorHistory');
+            });
+            
+            // Инициализация отображения
+            updateCalculatorDisplay();
+        }
+        
+        // ==================== ЗАМЕТКИ ====================
+        function initNotes() {
+            let notes = [];
+            let currentNoteId = null;
+            
+            const notesContainer = document.getElementById('notesContainer');
+            const noteModal = document.getElementById('noteModal');
+            const addNoteBtn = document.getElementById('addNoteBtn');
+            const closeModalBtn = document.getElementById('closeModal');
+            const cancelNoteBtn = document.getElementById('cancelNote');
+            const noteForm = document.getElementById('noteForm');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            // Загрузка заметок из localStorage
+            const savedNotes = localStorage.getItem('stasyaNotes');
+            if (savedNotes) {
+                notes = JSON.parse(savedNotes);
+                updateNotesDisplay();
+            } else {
+                // Создаем тестовые заметки
+                notes = [
+                    {
+                        id: 1,
+                        title: 'План постройки небоскрёба',
+                        content: '1. Подготовить фундамент (срок: 2 недели)\n2. Заказать материалы у поставщиков\n3. Нанять строительную бригаду енотов\n4. Получить разрешение от мэра Мышкинска\n5. Начать строительство первого этажа',
+                        date: '2023-10-15',
+                        time: '10:30'
+                    },
+                    {
+                        id: 2,
+                        title: 'Список покупок для стройки',
+                        content: '- Строительные материалы (цемент, кирпичи, арматура)\n- Инструменты (дрели, болгарки, уровни)\n- Обед для рабочих (сэндвичи, соки, фрукты)\n- Чертежи и планы архитектора\n- Средства защиты (каски, перчатки)',
+                        date: '2023-10-14',
+                        time: '16:45'
+                    },
+                    {
+                        id: 3,
+                        title: 'Встречи на неделю',
+                        content: 'Понедельник: Встреча с архитектором Белкой\nСреда: Проверка строительной площадки\nЧетверг: Переговоры с инвесторами\nПятница: Отчет перед мэром Мышкинска\nСуббота: Осмотр новых строительных материалов',
+                        date: '2023-10-13',
+                        time: '09:15'
+                    },
+                    {
+                        id: 4,
+                        title: 'Идеи для небоскрёба',
+                        content: '- Панорамный ресторан на верхнем этаже\n- Вертолётная площадка на крыше\n- Зимний сад с экзотическими растениями\n- Подземный паркинг на 500 мест\n- Смотровая площадка для туристов',
+                        date: '2023-10-12',
+                        time: '14:20'
+                    }
+                ];
+                updateNotesDisplay();
+                saveNotes();
+            }
+            
+            function updateNotesDisplay() {
+                notesContainer.innerHTML = '';
+                
+                // Добавляем кнопку создания новой заметки
+                const addNoteButton = document.createElement('button');
+                addNoteButton.className = 'add-note-btn';
+                addNoteButton.innerHTML = '<i class="fas fa-plus"></i><span>Добавить новую заметку</span>';
+                addNoteButton.addEventListener('click', () => openNoteModal());
+                notesContainer.appendChild(addNoteButton);
+                
+                // Отображаем существующие заметки
+                notes.forEach(note => {
+                    const noteElement = document.createElement('div');
+                    noteElement.className = 'note';
+                    noteElement.innerHTML = `
+                        <div class="note-header">
+                            <div class="note-title">${note.title}</div>
+                            <div class="note-date">${note.date} ${note.time}</div>
+                        </div>
+                        <div class="note-content">${note.content.replace(/\n/g, '<br>')}</div>
+                        <div class="note-actions">
+                            <button class="note-btn edit" data-id="${note.id}"><i class="fas fa-edit"></i> Редактировать</button>
+                            <button class="note-btn delete" data-id="${note.id}"><i class="fas fa-trash"></i> Удалить</button>
+                        </div>
+                    `;
+                    notesContainer.appendChild(noteElement);
+                });
+                
+                // Добавляем обработчики для кнопок редактирования и удаления
+                document.querySelectorAll('.note-btn.edit').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = parseInt(this.getAttribute('data-id'));
+                        openNoteModal(id);
+                    });
+                });
+                
+                document.querySelectorAll('.note-btn.delete').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = parseInt(this.getAttribute('data-id'));
+                        deleteNote(id);
+                    });
+                });
+            }
+            
+            function openNoteModal(id = null) {
+                currentNoteId = id;
+                
+                if (id) {
+                    // Редактирование существующей заметки
+                    const note = notes.find(n => n.id === id);
+                    document.getElementById('noteId').value = id;
+                    document.getElementById('noteTitle').value = note.title;
+                    document.getElementById('noteContent').value = note.content;
+                    modalTitle.textContent = 'Редактировать заметку';
+                } else {
+                    // Создание новой заметки
+                    document.getElementById('noteId').value = '';
+                    document.getElementById('noteTitle').value = '';
+                    document.getElementById('noteContent').value = '';
+                    modalTitle.textContent = 'Новая заметка';
+                }
+                
+                noteModal.classList.add('active');
+            }
+            
+            function closeNoteModal() {
+                noteModal.classList.remove('active');
+                noteForm.reset();
+                currentNoteId = null;
+            }
+            
+            function saveNote(event) {
+                event.preventDefault();
+                
+                const title = document.getElementById('noteTitle').value.trim();
+                const content = document.getElementById('noteContent').value.trim();
+                const id = document.getElementById('noteId').value;
+                
+                if (!title || !content) {
+                    alert('Заголовок и содержание заметки не могут быть пустыми!');
+                    return;
+                }
+                
+                const now = new Date();
+                const date = now.toISOString().split('T')[0];
+                const time = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+                
+                if (id) {
+                    // Обновление существующей заметки
+                    const noteIndex = notes.findIndex(n => n.id === parseInt(id));
+                    notes[noteIndex].title = title;
+                    notes[noteIndex].content = content;
+                    notes[noteIndex].date = date;
+                    notes[noteIndex].time = time;
+                } else {
+                    // Создание новой заметки
+                    const newId = notes.length > 0 ? Math.max(...notes.map(n => n.id)) + 1 : 1;
+                    notes.push({
+                        id: newId,
+                        title,
+                        content,
+                        date,
+                        time
+                    });
+                }
+                
+                updateNotesDisplay();
+                saveNotes();
+                closeNoteModal();
+            }
+            
+            function deleteNote(id) {
+                if (confirm('Вы уверены, что хотите удалить эту заметку?')) {
+                    notes = notes.filter(note => note.id !== id);
+                    updateNotesDisplay();
+                    saveNotes();
+                }
+            }
+            
+            function saveNotes() {
+                localStorage.setItem('stasyaNotes', JSON.stringify(notes));
+            }
+            
+            // Обработчики для модального окна заметок
+            addNoteBtn.addEventListener('click', () => openNoteModal());
+            closeModalBtn.addEventListener('click', closeNoteModal);
+            cancelNoteBtn.addEventListener('click', closeNoteModal);
+            noteForm.addEventListener('submit', saveNote);
+        }
+        
+        // ==================== НОВОСТИ ====================
+        function initNews() {
+            const newsContainer = document.getElementById('newsContainer');
+            const refreshNewsBtn = document.getElementById('refreshNews');
+            
+            const news = [
+                {
+                    id: 1,
+                    title: 'Такса Стася начинает строительство нового небоскрёбного комплекса',
+                    content: 'Знаменитая такса-предприниматель Стася сегодня официально объявила о начале строительства нового небоскрёбного комплекса "Звёздная Башня" в центре Мышкинска. Комплекс будет включать в себя 50-этажный бизнес-центр, жилые апартаменты класса люкс и развлекательный комплекс с панорамным видом на город. Строительство планируется завершить к концу следующего года.',
+                    image: 'https://images.unsplash.com/photo-1487956382158-bb926046304a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+                    date: '2023-10-15',
+                    category: 'Строительство',
+                    author: 'Корреспондент Бобёр'
+                },
+                {
+                    id: 2,
+                    title: 'В Мышкинске открывается крупнейший в Зверяндии парк развлечений',
+                    content: 'В преддверии зимнего сезона в Мышкинске откроется крупнейший в Зверяндии парк развлечений "Снежное Королевство". Парк будет включать в себя ледовый каток олимпийского стандарта, горки для тюбингов длиной до 200 метров и специальную зону для строительства снежных крепостей. Организаторы обещают ежедневные шоу и конкурсы с призами.',
+                    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w-800&q=80',
+                    date: '2023-10-14',
+                    category: 'Развлечения',
+                    author: 'Енот-репортёр'
+                },
+                {
+                    id: 3,
+                    title: 'Фестиваль сыра собрал рекордное количество участников',
+                    content: 'Ежегодный фестиваль сыра в Мышкинске побил все рекорды по посещаемости. В этом году в мероприятии приняли участие более 500 сыроваров со всей Зверяндии. Гран-при фестиваля получил сыр "Мышкинское благородство" от местного производителя. Фестиваль посетили более 50 тысяч гостей, что стало абсолютным рекордом за всю историю проведения мероприятия.',
+                    image: 'https://images.unsplash.com/photo-1488462237308-ecaa28b729d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+                    date: '2023-10-12',
+                    category: 'Культура',
+                    author: 'Сыч Всеволод'
+                },
+                {
+                    id: 4,
+                    title: 'Новый транспортный тоннель соединит Мышкинск и Барсучье',
+                    content: 'Власти Зверяндии одобрили проект строительства транспортного тоннеля, который соединит столицу Мышкинск с городом Барсучье. Протяжённость тоннеля составит 15 километров, что сделает его самым длинным в стране. Строительство начнётся в следующем месяце и должно быть завершено через два года. Тоннель значительно улучшит транспортное сообщение между двумя крупнейшими городами Зверяндии.',
+                    image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+                    date: '2023-10-10',
+                    category: 'Инфраструктура',
+                    author: 'Крот Подземный'
+                }
+            ];
+            
+            function displayNews() {
+                newsContainer.innerHTML = '';
+                news.forEach(item => {
+                    const article = document.createElement('article');
+                    article.className = 'news-article';
+                    article.innerHTML = `
+                        <div class="news-image">
+                            <img src="${item.image}" alt="${item.title}">
+                        </div>
+                        <div class="news-content">
+                            <div>
+                                <h3 class="news-title">${item.title}</h3>
+                                <div class="news-meta">
+                                    <span><i class="far fa-calendar"></i> ${item.date}</span>
+                                    <span><i class="fas fa-tag"></i> ${item.category}</span>
+                                    <span><i class="fas fa-user"></i> ${item.author}</span>
+                                </div>
+                                <p class="news-text">${item.content}</p>
+                            </div>
+                            <a href="#" class="read-more">Читать далее <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    `;
+                    newsContainer.appendChild(article);
+                });
+            }
+            
+            // Обновление новостей
+            refreshNewsBtn.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Обновление...';
+                setTimeout(() => {
+                    displayNews();
+                    this.innerHTML = '<i class="fas fa-sync-alt"></i> Обновить';
+                }, 1000);
+            });
+            
+            // Инициализация
+            displayNews();
+        }
+        
+        // ==================== ПОГОДА ====================
+        function initWeather() {
+            const weatherContainer = document.getElementById('weatherContainer');
+            const citySelect = document.getElementById('citySelect');
+            
+            // Данные о погоде для городов Зверяндии
+            const weatherData = {
+                'mouskinsk': {
+                    name: 'Мышкинск',
+                    temp: 18,
+                    feelsLike: 17,
+                    description: 'Солнечно',
+                    icon: 'fa-sun',
+                    humidity: 65,
+                    wind: 12,
+                    pressure: 1013,
+                    forecast: [
+                        { day: 'Пн', temp: 20, icon: 'fa-sun' },
+                        { day: 'Вт', temp: 19, icon: 'fa-cloud-sun' },
+                        { day: 'Ср', temp: 17, icon: 'fa-cloud' },
+                        { day: 'Чт', temp: 16, icon: 'fa-cloud-rain' },
+                        { day: 'Пт', temp: 18, icon: 'fa-cloud-sun' },
+                        { day: 'Сб', temp: 21, icon: 'fa-sun' },
+                        { day: 'Вс', temp: 22, icon: 'fa-sun' }
+                    ]
+                },
+                'barsuchye': {
+                    name: 'Барсучье',
+                    temp: 15,
+                    feelsLike: 14,
+                    description: 'Облачно',
+                    icon: 'fa-cloud',
+                    humidity: 75,
+                    wind: 8,
+                    pressure: 1015,
+                    forecast: [
+                        { day: 'Пн', temp: 16, icon: 'fa-cloud' },
+                        { day: 'Вт', temp: 14, icon: 'fa-cloud-rain' },
+                        { day: 'Ср', temp: 13, icon: 'fa-cloud-rain' },
+                        { day: 'Чт', temp: 15, icon: 'fa-cloud' },
+                        { day: 'Пт', temp: 16, icon: 'fa-cloud-sun' },
+                        { day: 'Сб', temp: 18, icon: 'fa-sun' },
+                        { day: 'Вс', temp: 19, icon: 'fa-sun' }
+                    ]
+                },
+                'lisiy-ostrov': {
+                    name: 'Лисий Остров',
+                    temp: 20,
+                    feelsLike: 19,
+                    description: 'Ясно',
+                    icon: 'fa-sun',
+                    humidity: 60,
+                    wind: 10,
+                    pressure: 1012,
+                    forecast: [
+                        { day: 'Пн', temp: 21, icon: 'fa-sun' },
+                        { day: 'Вт', temp: 22, icon: 'fa-sun' },
+                        { day: 'Ср', temp: 19, icon: 'fa-cloud-sun' },
+                        { day: 'Чт', temp: 18, icon: 'fa-cloud' },
+                        { day: 'Пт', temp: 20, icon: 'fa-sun' },
+                        { day: 'Сб', temp: 23, icon: 'fa-sun' },
+                        { day: 'Вс', temp: 24, icon: 'fa-sun' }
+                    ]
+                },
+                'yozhikovo': {
+                    name: 'Ёжиково',
+                    temp: 16,
+                    feelsLike: 15,
+                    description: 'Небольшая облачность',
+                    icon: 'fa-cloud-sun',
+                    humidity: 70,
+                    wind: 6,
+                    pressure: 1014,
+                    forecast: [
+                        { day: 'Пн', temp: 17, icon: 'fa-cloud-sun' },
+                        { day: 'Вт', temp: 16, icon: 'fa-cloud' },
+                        { day: 'Ср', temp: 15, icon: 'fa-cloud-rain' },
+                        { day: 'Чт', temp: 16, icon: 'fa-cloud-sun' },
+                        { day: 'Пт', temp: 18, icon: 'fa-sun' },
+                        { day: 'Сб', temp: 19, icon: 'fa-sun' },
+                        { day: 'Вс', temp: 20, icon: 'fa-sun' }
+                    ]
+                },
+                'zaichiy-gorod': {
+                    name: 'Заячий Город',
+                    temp: 14,
+                    feelsLike: 13,
+                    description: 'Пасмурно',
+                    icon: 'fa-cloud',
+                    humidity: 80,
+                    wind: 5,
+                    pressure: 1016,
+                    forecast: [
+                        { day: 'Пн', temp: 15, icon: 'fa-cloud' },
+                        { day: 'Вт', temp: 14, icon: 'fa-cloud-rain' },
+                        { day: 'Ср', temp: 13, icon: 'fa-cloud-rain' },
+                        { day: 'Чт', temp: 14, icon: 'fa-cloud' },
+                        { day: 'Пт', temp: 15, icon: 'fa-cloud-sun' },
+                        { day: 'Сб', temp: 16, icon: 'fa-sun' },
+                        { day: 'Вс', temp: 17, icon: 'fa-sun' }
+                    ]
+                }
+            };
+            
+            function displayWeather(cityId = 'mouskinsk') {
+                const city = weatherData[cityId];
+                if (!city) return;
+                
+                weatherContainer.innerHTML = '';
+                
+                // Основная карточка погоды
+                const mainCard = document.createElement('div');
+                mainCard.className = 'weather-card main';
+                mainCard.innerHTML = `
+                    <div class="weather-header">
+                        <div class="weather-location">
+                            <h3>${city.name}, Зверяндия</h3>
+                            <div class="weather-date">${new Date().toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' })}</div>
+                        </div>
+                        <div class="weather-icon">
+                            <i class="fas ${city.icon}"></i>
+                        </div>
+                    </div>
+                    <div class="weather-temp">${city.temp}°C</div>
+                    <div class="weather-desc">${city.description}, ощущается как ${city.feelsLike}°C</div>
+                    <div class="weather-details">
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                            <div class="detail-info">
+                                <h4>Влажность</h4>
+                                <p>${city.humidity}%</p>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-wind"></i>
+                            </div>
+                            <div class="detail-info">
+                                <h4>Ветер</h4>
+                                <p>${city.wind} км/ч</p>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <div class="detail-info">
+                                <h4>Давление</h4>
+                                <p>${city.pressure} гПа</p>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-thermometer-half"></i>
+                            </div>
+                            <div class="detail-info">
+                                <h4>Ощущается</h4>
+                                <p>${city.feelsLike}°C</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                weatherContainer.appendChild(mainCard);
+                
+                // Карточка прогноза на неделю
+                const forecastCard = document.createElement('div');
+                forecastCard.className = 'weather-card';
+                forecastCard.innerHTML = `
+                    <h3 style="margin-bottom: 20px; color: var(--primary-color);">Прогноз на неделю</h3>
+                    <div class="forecast-container">
+                        ${city.forecast.map(day => `
+                            <div class="forecast-day">
+                                <div class="forecast-day-name">${day.day}</div>
+                                <div class="forecast-icon"><i class="fas ${day.icon}"></i></div>
+                                <div class="forecast-temp">${day.temp}°C</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                weatherContainer.appendChild(forecastCard);
+                
+                // Карточка рекомендаций
+                const recommendationsCard = document.createElement('div');
+                recommendationsCard.className = 'weather-card';
+                
+                let recommendations = '';
+                if (city.temp > 20) {
+                    recommendations = 'Идеальная погода для строительных работ! Рекомендуется работать на открытом воздухе и пить больше воды.';
+                } else if (city.temp > 10) {
+                    recommendations = 'Хорошая погода для работы. Можно проводить наружные строительные работы.';
+                } else if (city.temp > 0) {
+                    recommendations = 'Прохладно. Рекомендуется теплая одежда для работы на улице. Проверьте, не замерзают ли строительные материалы.';
+                } else {
+                    recommendations = 'Холодно. Наружные работы могут быть затруднены. Рекомендуется сосредоточиться на внутренних работах.';
+                }
+                
+                if (city.description.includes('дождь')) {
+                    recommendations += ' Ожидаются осадки, планируйте работы соответственно.';
+                }
+                
+                recommendationsCard.innerHTML = `
+                    <h3 style="margin-bottom: 20px; color: var(--primary-color);">Рекомендации для строителей</h3>
+                    <p style="color: #555; line-height: 1.7;">${recommendations}</p>
+                    <div style="display: flex; gap: 15px; margin-top: 25px;">
+                        <div style="display: flex; align-items: center; gap: 10px; background: rgba(93, 63, 211, 0.08); padding: 12px 15px; border-radius: 10px;">
+                            <i class="fas fa-hard-hat" style="color: var(--primary-color);"></i>
+                            <span>Строительные работы: ${city.temp > 5 ? 'Рекомендуются' : 'Ограничены'}</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px; background: rgba(93, 63, 211, 0.08); padding: 12px 15px; border-radius: 10px;">
+                            <i class="fas fa-truck" style="color: var(--primary-color);"></i>
+                            <span>Доставка материалов: ${city.description.includes('дождь') ? 'Возможны задержки' : 'Нормальная'}</span>
+                        </div>
+                    </div>
+                `;
+                weatherContainer.appendChild(recommendationsCard);
+            }
+            
+            // Обработчик изменения города
+            citySelect.addEventListener('change', function() {
+                displayWeather(this.value);
+            });
+            
+            // Инициализация
+            displayWeather();
+        }
+        
+        // ==================== КАЛЕНДАРЬ ====================
+        function initCalendar() {
+            const calendarDays = document.getElementById('calendarDays');
+            const currentMonthEl = document.getElementById('currentMonth');
+            const prevMonthBtn = document.getElementById('prevMonth');
+            const nextMonthBtn = document.getElementById('nextMonth');
+            const todayBtn = document.getElementById('todayBtn');
+            const todayEvents = document.getElementById('todayEvents');
+            
+            let currentDate = new Date();
+            let currentMonth = currentDate.getMonth();
+            let currentYear = currentDate.getFullYear();
+            
+            // События календаря
+            const events = [
+                { date: '2023-10-15', title: 'Начало строительства небоскрёба', time: '10:00' },
+                { date: '2023-10-16', title: 'Встреча с архитектором', time: '14:30' },
+                { date: '2023-10-18', title: 'Поставка строительных материалов', time: '09:00' },
+                { date: '2023-10-20', title: 'Отчет перед инвесторами', time: '16:00' },
+                { date: '2023-10-22', title: 'Осмотр строительной площадки', time: '11:00' },
+                { date: '2023-10-25', title: 'Подписание договоров', time: '13:00' },
+                { date: '2023-10-28', title: 'Праздник закладки первого камня', time: '12:00' }
+            ];
+            
+            function renderCalendar() {
+                // Очищаем календарь
+                calendarDays.innerHTML = '';
+                
+                // Обновляем заголовок месяца
+                const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+                currentMonthEl.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+                
+                // Первый день месяца
+                const firstDay = new Date(currentYear, currentMonth, 1);
+                // Последний день месяца
+                const lastDay = new Date(currentYear, currentMonth + 1, 0);
+                // Количество дней в месяце
+                const daysInMonth = lastDay.getDate();
+                // День недели первого дня месяца (0 - воскресенье, 1 - понедельник, ...)
+                const firstDayIndex = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
+                
+                // Добавляем пустые клетки до первого дня месяца
+                for (let i = 0; i < firstDayIndex; i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.classList.add('empty');
+                    calendarDays.appendChild(emptyDay);
+                }
+                
+                // Добавляем дни месяца
+                const today = new Date();
+                const isCurrentMonth = today.getMonth() === currentMonth && today.getFullYear() === currentYear;
+                
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.textContent = day;
+                    
+                    // Проверяем, является ли день сегодняшним
+                    if (isCurrentMonth && day === today.getDate()) {
+                        dayElement.classList.add('today');
+                    }
+                    
+                    // Проверяем, есть ли события на этот день
+                    const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                    const dayEvents = events.filter(event => event.date === dateStr);
+                    
+                    if (dayEvents.length > 0) {
+                        dayElement.classList.add('event');
+                    }
+                    
+                    calendarDays.appendChild(dayElement);
+                }
+                
+                // Обновляем события на сегодня
+                updateTodayEvents();
+            }
+            
+            function updateTodayEvents() {
+                const todayStr = new Date().toISOString().split('T')[0];
+                const todayEventsList = events.filter(event => event.date === todayStr);
+                
+                todayEvents.innerHTML = '';
+                
+                if (todayEventsList.length === 0) {
+                    todayEvents.innerHTML = '<p style="color: #777;">Событий на сегодня нет</p>';
+                } else {
+                    todayEventsList.forEach(event => {
+                        const eventItem = document.createElement('div');
+                        eventItem.className = 'event-item';
+                        eventItem.innerHTML = `
+                            <div class="event-time">${event.time}</div>
+                            <div class="event-title">${event.title}</div>
+                        `;
+                        todayEvents.appendChild(eventItem);
+                    });
+                }
+            }
+            
+            // Переключение месяцев
+            prevMonthBtn.addEventListener('click', () => {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                renderCalendar();
+            });
+            
+            nextMonthBtn.addEventListener('click', () => {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                renderCalendar();
+            });
+            
+            // Кнопка "Сегодня"
+            todayBtn.addEventListener('click', () => {
+                currentDate = new Date();
+                currentMonth = currentDate.getMonth();
+                currentYear = currentDate.getFullYear();
+                renderCalendar();
+            });
+            
+            // Инициализация
+            renderCalendar();
+        }
+        
+        // ==================== КОНТАКТЫ ====================
+        function initContacts() {
+            const contactsContainer = document.getElementById('contactsContainer');
+            
+            const contacts = [
+                {
+                    id: 1,
+                    name: 'Белка Архитекторовна',
+                    role: 'Главный архитектор',
+                    phone: '+7 (900) 123-45-67',
+                    email: 'belka@zverlandia.ru',
+                    avatar: 'fas fa-squirrel'
+                },
+                {
+                    id: 2,
+                    name: 'Ёж Подрядчиков',
+                    role: 'Подрядчик',
+                    phone: '+7 (900) 234-56-78',
+                    email: 'ej@zverlandia.ru',
+                    avatar: 'fas fa-hedgehog'
+                },
+                {
+                    id: 3,
+                    name: 'Барсук Снабженец',
+                    role: 'Поставщик материалов',
+                    phone: '+7 (900) 345-67-89',
+                    email: 'barsuk@zverlandia.ru',
+                    avatar: 'fas fa-badge'
+                },
+                {
+                    id: 4,
+                    name: 'Лиса Инвесторовна',
+                    role: 'Инвестор',
+                    phone: '+7 (900) 456-78-90',
+                    email: 'lisa@zverlandia.ru',
+                    avatar: 'fas fa-fox'
+                },
+                {
+                    id: 5,
+                    name: 'Мэр Мышкинска',
+                    role: 'Мэр города',
+                    phone: '+7 (900) 567-89-01',
+                    email: 'mayor@mouskinsk.ru',
+                    avatar: 'fas fa-crown'
+                },
+                {
+                    id: 6,
+                    name: 'Волк Строителев',
+                    role: 'Прораб',
+                    phone: '+7 (900) 678-90-12',
+                    email: 'volk@zverlandia.ru',
+                    avatar: 'fas fa-wolf-pack-battalion'
+                }
+            ];
+            
+            function displayContacts() {
+                contactsContainer.innerHTML = '';
+                
+                contacts.forEach(contact => {
+                    const contactCard = document.createElement('div');
+                    contactCard.className = 'contact-card';
+                    contactCard.innerHTML = `
+                        <div class="contact-avatar">
+                            <i class="${contact.avatar}"></i>
+                        </div>
+                        <div class="contact-name">${contact.name}</div>
+                        <div class="contact-role">${contact.role}</div>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>${contact.phone}</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>${contact.email}</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px; margin-top: 20px; width: 100%;">
+                            <button class="btn btn-secondary" style="flex: 1; padding: 10px;"><i class="fas fa-phone"></i> Позвонить</button>
+                            <button class="btn btn-primary" style="flex: 1; padding: 10px;"><i class="fas fa-envelope"></i> Написать</button>
+                        </div>
+                    `;
+                    contactsContainer.appendChild(contactCard);
+                });
+            }
+            
+            // Инициализация
+            displayContacts();
+        }
     </script>
 </body>
 </html>
