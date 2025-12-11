@@ -1048,6 +1048,13 @@
             margin-top: 5px;
         }
         
+        .forecast-desc {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 5px;
+            text-align: center;
+        }
+        
         /* Календарь */
         .calendar-container {
             background: var(--card-bg);
@@ -2517,437 +2524,161 @@
         }
         
         // ==================== ПОГОДА (ЕЖЕДНЕВНО МЕНЯЮЩАЯСЯ) ====================
-        
-            // ==================== ПОГОДА (ЕЖЕДНЕВНО МЕНЯЮЩАЯСЯ) ====================
-function initWeather() {
-    const weatherContainer = document.getElementById('weatherContainer');
-    const citySelect = document.getElementById('citySelect');
-    
-    // Функция для генерации согласованной погоды на основе даты и времени года
-    function generateDailyWeather(cityId, cityName) {
-        const today = new Date();
-        const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
-        const month = today.getMonth(); // 0-январь, 11-декабрь
-        const seed = dayOfYear * cityName.length + cityName.charCodeAt(0);
-        
-        // Определяем время года
-        let season;
-        let seasonMultiplier;
-        if (month >= 11 || month <= 1) {
-            season = 'Зима';
-            seasonMultiplier = -15; // Зимой холоднее
-        } else if (month >= 2 && month <= 4) {
-            season = 'Весна';
-            seasonMultiplier = -5; // Весной прохладно
-        } else if (month >= 5 && month <= 7) {
-            season = 'Лето';
-            seasonMultiplier = 10; // Летом теплее
-        } else {
-            season = 'Осень';
-            seasonMultiplier = 0; // Осенью нейтрально
-        }
-        
-        // Базовая температура с учетом времени года и города
-        const baseTemp = 15 + (seed % 15) + seasonMultiplier;
-        const dailyVariation = Math.sin(dayOfYear * 0.1) * 5;
-        let tempToday = Math.round(baseTemp + dailyVariation);
-        
-        // Массив типов погоды с ограничениями по температуре
-        const weatherTypes = [
-            { description: 'Солнечно', icon: 'fa-sun', minTemp: 5, maxTemp: 40, humidity: 40 + (seed % 30), wind: 5 + (seed % 10) },
-            { description: 'Облачно', icon: 'fa-cloud', minTemp: -10, maxTemp: 35, humidity: 60 + (seed % 25), wind: 8 + (seed % 7) },
-            { description: 'Легкий дождь', icon: 'fa-cloud-rain', minTemp: 0, maxTemp: 25, humidity: 75 + (seed % 20), wind: 10 + (seed % 10) },
-            { description: 'Гроза', icon: 'fa-bolt', minTemp: 15, maxTemp: 35, humidity: 80 + (seed % 15), wind: 15 + (seed % 10) },
-            { description: 'Туман', icon: 'fa-smog', minTemp: -5, maxTemp: 20, humidity: 85 + (seed % 10), wind: 3 + (seed % 5) },
-            { description: 'Снег', icon: 'fa-snowflake', minTemp: -20, maxTemp: 0, humidity: 70 + (seed % 20), wind: 12 + (seed % 8) },
-            { description: 'Переменная облачность', icon: 'fa-cloud-sun', minTemp: 0, maxTemp: 30, humidity: 50 + (seed % 25), wind: 7 + (seed % 8) }
-        ];
-        
-        // Определяем погоду на сегодня с учетом температуры
-        let todayWeatherIndex;
-        let suitableWeatherFound = false;
-        let attempts = 0;
-        
-        do {
-            todayWeatherIndex = (seed + dayOfYear + attempts) % weatherTypes.length;
-            const possibleWeather = weatherTypes[todayWeatherIndex];
+        function initWeather() {
+            const weatherContainer = document.getElementById('weatherContainer');
+            const citySelect = document.getElementById('citySelect');
             
-            // Проверяем, подходит ли погода для текущей температуры
-            if (tempToday >= possibleWeather.minTemp && tempToday <= possibleWeather.maxTemp) {
-                suitableWeatherFound = true;
-            } else {
-                // Если погода не подходит по температуре, корректируем температуру
-                if (possibleWeather.description === 'Снег' && tempToday > possibleWeather.maxTemp) {
-                    // Для снега температура должна быть 0 или ниже
-                    tempToday = Math.min(tempToday, possibleWeather.maxTemp - (seed % 5));
-                } else if (possibleWeather.description === 'Гроза' && tempToday < possibleWeather.minTemp) {
-                    // Для грозы температура должна быть не ниже 15
-                    tempToday = Math.max(tempToday, possibleWeather.minTemp + (seed % 5));
+            // Функция для генерации согласованной погоды на основе даты
+            function generateDailyWeather(cityId, cityName) {
+                // Используем текущую дату для генерации уникальной погоды каждый день
+                const today = new Date();
+                const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+                
+                // Создаем уникальный seed для каждого города на основе дня года и названия города
+                const seed = dayOfYear * cityName.length + cityName.charCodeAt(0);
+                
+                // Массив типов погоды с разумными температурными диапазонами
+                const weatherTypes = [
+                    { description: 'Солнечно', icon: 'fa-sun', minTemp: 10, maxTemp: 35, humidity: 30 + (seed % 40), wind: 3 + (seed % 8) },
+                    { description: 'Облачно', icon: 'fa-cloud', minTemp: 5, maxTemp: 25, humidity: 50 + (seed % 30), wind: 5 + (seed % 10) },
+                    { description: 'Легкий дождь', icon: 'fa-cloud-rain', minTemp: 8, maxTemp: 22, humidity: 70 + (seed % 25), wind: 8 + (seed % 7) },
+                    { description: 'Гроза', icon: 'fa-bolt', minTemp: 18, maxTemp: 32, humidity: 75 + (seed % 20), wind: 12 + (seed % 10) },
+                    { description: 'Туман', icon: 'fa-smog', minTemp: 0, maxTemp: 15, humidity: 85 + (seed % 10), wind: 2 + (seed % 5) },
+                    { description: 'Снег', icon: 'fa-snowflake', minTemp: -15, maxTemp: 0, humidity: 65 + (seed % 30), wind: 10 + (seed % 8) },
+                    { description: 'Переменная облачность', icon: 'fa-cloud-sun', minTemp: 8, maxTemp: 28, humidity: 45 + (seed % 30), wind: 6 + (seed % 8) }
+                ];
+                
+                // Генерация температуры для сегодняшнего дня
+                const baseTemp = 15 + (seed % 12); // Более узкий диапазон для реалистичности
+                const dailyVariation = Math.sin(dayOfYear * 0.17) * 8; // Более плавное изменение
+                let tempToday = Math.round(baseTemp + dailyVariation);
+                
+                // Определяем время года для дополнительной корректировки
+                const month = today.getMonth();
+                let seasonAdjustment = 0;
+                if (month >= 11 || month <= 1) seasonAdjustment = -8; // Зима
+                else if (month >= 2 && month <= 4) seasonAdjustment = -2; // Весна
+                else if (month >= 5 && month <= 7) seasonAdjustment = 6; // Лето
+                else seasonAdjustment = 0; // Осень
+                
+                tempToday += seasonAdjustment;
+                
+                // Выбираем погоду на сегодня с учетом температуры
+                let todayWeatherIndex = 0;
+                let suitableTypes = weatherTypes.filter(w => tempToday >= w.minTemp && tempToday <= w.maxTemp);
+                
+                if (suitableTypes.length > 0) {
+                    // Выбираем случайную подходящую погоду
+                    todayWeatherIndex = weatherTypes.indexOf(suitableTypes[seed % suitableTypes.length]);
+                } else {
+                    // Если нет подходящей погоды, корректируем температуру для первой подходящей
+                    const firstSuitable = weatherTypes.find(w => tempToday >= w.minTemp && tempToday <= w.maxTemp);
+                    if (firstSuitable) {
+                        todayWeatherIndex = weatherTypes.indexOf(firstSuitable);
+                        // Незначительно корректируем температуру
+                        tempToday = Math.max(firstSuitable.minTemp, Math.min(firstSuitable.maxTemp, tempToday));
+                    }
                 }
-                attempts++;
-            }
-        } while (!suitableWeatherFound && attempts < 10);
-        
-        // Если не нашли подходящую погоду, берем первую подходящую по температуре
-        if (!suitableWeatherFound) {
-            todayWeatherIndex = weatherTypes.findIndex(w => 
-                tempToday >= w.minTemp && tempToday <= w.maxTemp
-            );
-            if (todayWeatherIndex === -1) {
-                todayWeatherIndex = 0; // По умолчанию
-            }
-        }
-        
-        const todayWeather = weatherTypes[todayWeatherIndex];
-        
-        // Корректируем температуру для снега (должна быть 0 или ниже)
-        if (todayWeather.description === 'Снег' && tempToday > 0) {
-            tempToday = -Math.abs(seed % 5); // Делаем отрицательной
-        }
-        
-        // "Ощущается как"
-        let feelsLikeToday = tempToday;
-        if (todayWeather.humidity > 70) feelsLikeToday += 2;
-        if (todayWeather.wind > 10) feelsLikeToday -= 3;
-        
-        // Давление в зависимости от погоды и сезона
-        let pressure;
-        if (todayWeather.description.includes('дождь') || todayWeather.description.includes('Гроза')) {
-            pressure = 1000 + (seed % 15);
-        } else if (todayWeather.description.includes('Солнечно')) {
-            pressure = 1020 + (seed % 10);
-        } else {
-            pressure = 1010 + (seed % 15);
-        }
-        
-        // Корректируем давление по сезону
-        if (season === 'Зима') pressure += 10;
-        if (season === 'Лето') pressure -= 5;
-        
-        // Генерация прогноза на неделю (согласованного)
-        const forecast = [];
-        const daysOfWeek = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
-        const weekdayIndex = today.getDay();
-        
-        for (let i = 0; i < 7; i++) {
-            const forecastDayIndex = (weekdayIndex + i) % 7;
-            const dayName = daysOfWeek[forecastDayIndex];
-            
-            // Определяем погоду для этого дня
-            let forecastWeatherIndex = (todayWeatherIndex + i * 2) % weatherTypes.length;
-            
-            // Корректируем температуру для этого дня (плавное изменение)
-            let forecastTemp = Math.round(tempToday + Math.sin(i * 0.8) * 4);
-            
-            // Убеждаемся, что погода соответствует температуре
-            const forecastWeather = weatherTypes[forecastWeatherIndex];
-            if (forecastTemp < forecastWeather.minTemp || forecastTemp > forecastWeather.maxTemp) {
-                // Ищем подходящую погоду для этой температуры
-                const suitableIndex = weatherTypes.findIndex(w => 
-                    forecastTemp >= w.minTemp && forecastTemp <= w.maxTemp
-                );
-                if (suitableIndex !== -1) {
-                    forecastWeatherIndex = suitableIndex;
+                
+                const todayWeather = weatherTypes[todayWeatherIndex];
+                
+                // Корректируем параметры погоды
+                const humidity = todayWeather.humidity;
+                const wind = todayWeather.wind;
+                
+                // "Ощущается как" с учетом влажности и ветра
+                let feelsLikeToday = tempToday;
+                if (humidity > 70) feelsLikeToday += Math.round((humidity - 70) / 10);
+                if (wind > 10) feelsLikeToday -= Math.round((wind - 10) / 5);
+                
+                // Давление
+                let pressure = 1013;
+                if (todayWeather.description.includes('дождь') || todayWeather.description.includes('Гроза')) {
+                    pressure = 1000 + (seed % 15);
+                } else if (todayWeather.description.includes('Солнечно')) {
+                    pressure = 1020 + (seed % 10);
+                } else {
+                    pressure = 1010 + (seed % 15);
                 }
+                
+                // Генерация прогноза на неделю (логически связанного с сегодняшней погодой)
+                const forecast = [];
+                const daysOfWeek = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+                const weekdayIndex = today.getDay();
+                
+                // Начинаем прогноз с завтрашнего дня (i=1)
+                for (let i = 1; i <= 7; i++) {
+                    const forecastDayIndex = (weekdayIndex + i) % 7;
+                    const dayName = daysOfWeek[forecastDayIndex];
+                    
+                    // Определяем погоду для этого дня (последовательно меняется от сегодняшней)
+                    let forecastWeatherIndex = (todayWeatherIndex + i * 1) % weatherTypes.length;
+                    const forecastWeather = weatherTypes[forecastWeatherIndex];
+                    
+                    // Температура для дня i (плавное изменение от сегодняшней)
+                    let forecastTemp = Math.round(tempToday + Math.sin(i * 0.5) * 6);
+                    
+                    // Корректируем температуру, чтобы она соответствовала типу погоды
+                    if (forecastTemp < forecastWeather.minTemp || forecastTemp > forecastWeather.maxTemp) {
+                        // Подбираем ближайшую подходящую погоду
+                        const suitableForTemp = weatherTypes.filter(w => 
+                            forecastTemp >= w.minTemp && forecastTemp <= w.maxTemp
+                        );
+                        if (suitableForTemp.length > 0) {
+                            forecastWeatherIndex = weatherTypes.indexOf(suitableForTemp[(seed + i) % suitableForTemp.length]);
+                        } else {
+                            // Корректируем температуру до допустимого диапазона
+                            forecastTemp = Math.max(forecastWeather.minTemp, Math.min(forecastWeather.maxTemp, forecastTemp));
+                        }
+                    }
+                    
+                    // Убеждаемся, что снег только при температуре 0 или ниже
+                    const finalWeather = weatherTypes[forecastWeatherIndex];
+                    if (finalWeather.description === 'Снег' && forecastTemp > 0) {
+                        forecastTemp = -Math.abs((seed + i) % 5); // Делаем отрицательной
+                    }
+                    
+                    // Для Листинска убираем снег при положительных температурах
+                    if (cityName === 'Листинск' && finalWeather.description === 'Снег' && forecastTemp > 0) {
+                        // Заменяем снег на дождь или облачность
+                        forecastWeatherIndex = (forecastTemp > 15) ? 0 : 1; // Солнечно или облачно
+                    }
+                    
+                    forecast.push({
+                        day: dayName,
+                        temp: forecastTemp,
+                        description: weatherTypes[forecastWeatherIndex].description,
+                        icon: weatherTypes[forecastWeatherIndex].icon
+                    });
+                }
+                
+                // Возвращаем согласованные данные
+                return {
+                    name: cityName,
+                    temp: tempToday,
+                    feelsLike: Math.round(feelsLikeToday),
+                    description: todayWeather.description,
+                    icon: todayWeather.icon,
+                    humidity: humidity,
+                    wind: wind,
+                    pressure: Math.round(pressure),
+                    forecast: forecast,
+                    lastUpdated: today.toLocaleDateString('ru-RU')
+                };
             }
             
-            // Корректируем температуру для снега
-            const finalWeather = weatherTypes[forecastWeatherIndex];
-            if (finalWeather.description === 'Снег' && forecastTemp > 0) {
-                forecastTemp = -Math.abs((seed + i) % 8);
-            }
-            
-            forecast.push({
-                day: dayName,
-                temp: forecastTemp,
-                description: finalWeather.description,
-                icon: finalWeather.icon,
-                humidity: finalWeather.humidity + (i * 3),
-                wind: finalWeather.wind + (i % 3)
-            });
-        }
-        
-        // Возвращаем согласованные данные
-        return {
-            name: cityName,
-            temp: tempToday,
-            feelsLike: Math.round(feelsLikeToday),
-            description: todayWeather.description,
-            icon: todayWeather.icon,
-            humidity: todayWeather.humidity,
-            wind: todayWeather.wind,
-            pressure: Math.round(pressure),
-            forecast: forecast,
-            season: season,
-            lastUpdated: today.toLocaleDateString('ru-RU')
-        };
-    }
-    
-    // Данные о погоде для городов Зверяндии
-    const weatherData = {
-        'mouskinsk': generateDailyWeather(1, 'Мышкинск'),
-        'listinsk': generateDailyWeather(2, 'Листинск'),
-        'kosmos': generateDailyWeather(3, 'Космос'),
-        'morozhensk': generateDailyWeather(4, 'Мороженск'),
-        'ulyanovsk': generateDailyWeather(5, 'Ульяновск'),
-        'barsuchye': generateDailyWeather(6, 'Барсучье'),
-        'lisiy-ostrov': generateDailyWeather(7, 'Лисий Остров'),
-        'yozhikovo': generateDailyWeather(8, 'Ёжиково'),
-        'zaichiy-gorod': generateDailyWeather(9, 'Заячий Город')
-    };
-    
-    function displayWeather(cityId = 'mouskinsk') {
-        const city = weatherData[cityId];
-        if (!city) return;
-        
-        weatherContainer.innerHTML = '';
-        
-        // Основная карточка погоды с информацией о времени года
-        const mainCard = document.createElement('div');
-        mainCard.className = 'weather-card main';
-        mainCard.innerHTML = `
-            <div class="weather-header">
-                <div class="weather-location">
-                    <h3>${city.name}, Зверяндия</h3>
-                    <div class="weather-date">${new Date().toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' })}</div>
-                    <div style="font-size: 0.8rem; opacity: 0.8; margin-top: 5px;">
-                        <i class="fas fa-sync-alt"></i> Обновлено сегодня • <i class="fas fa-tree"></i> ${city.season}
-                    </div>
-                </div>
-                <div class="weather-icon">
-                    <i class="fas ${city.icon}"></i>
-                </div>
-            </div>
-            <div class="weather-temp">${city.temp}°C</div>
-            <div class="weather-desc">${city.description}, ощущается как ${city.feelsLike}°C</div>
-            <div class="weather-details">
-                <div class="detail-item">
-                    <div class="detail-icon">
-                        <i class="fas fa-tint"></i>
-                    </div>
-                    <div class="detail-info">
-                        <h4>Влажность</h4>
-                        <p>${city.humidity}%</p>
-                    </div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-icon">
-                        <i class="fas fa-wind"></i>
-                    </div>
-                    <div class="detail-info">
-                        <h4>Ветер</h4>
-                        <p>${city.wind} км/ч</p>
-                    </div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-icon">
-                        <i class="fas fa-tachometer-alt"></i>
-                    </div>
-                    <div class="detail-info">
-                        <h4>Давление</h4>
-                        <p>${city.pressure} гПа</p>
-                    </div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-icon">
-                        <i class="fas fa-thermometer-half"></i>
-                    </div>
-                    <div class="detail-info">
-                        <h4>Ощущается</h4>
-                        <p>${city.feelsLike}°C</p>
-                    </div>
-                </div>
-            </div>
-        `;
-        weatherContainer.appendChild(mainCard);
-        
-        // Карточка прогноза на неделю с описанием погоды
-        const forecastCard = document.createElement('div');
-        forecastCard.className = 'weather-card';
-        forecastCard.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h3 style="color: var(--primary-color);">Прогноз на неделю</h3>
-                <div style="font-size: 0.85rem; color: #666;">
-                    <i class="fas fa-calendar-alt"></i> ${new Date().toLocaleDateString('ru-RU', { month: 'long' })}
-                </div>
-            </div>
-            <div class="forecast-container">
-                ${city.forecast.map(day => `
-                    <div class="forecast-day">
-                        <div class="forecast-day-name">${day.day}</div>
-                        <div class="forecast-icon"><i class="fas ${day.icon}"></i></div>
-                        <div class="forecast-temp">${day.temp}°C</div>
-                        <div class="forecast-desc" style="font-size: 0.75rem; color: #666; margin-top: 5px; text-align: center;">${day.description}</div>
-                    </div>
-                `).join('')}
-            </div>
-            <div style="margin-top: 15px; font-size: 0.85rem; color: #666; text-align: center;">
-                <i class="fas fa-info-circle"></i> Прогноз обновляется ежедневно • Сейчас: ${city.season}
-            </div>
-        `;
-        weatherContainer.appendChild(forecastCard);
-        
-        // Карточка рекомендаций с учетом времени года
-        const recommendationsCard = document.createElement('div');
-        recommendationsCard.className = 'weather-card';
-        
-        let recommendations = '';
-        let activity = '';
-        let clothing = '';
-        
-        // Рекомендации с учетом температуры и времени года
-        if (city.temp > 25) {
-            recommendations = 'Жаркая погода! Отличный день для посещения пляжей, парков и открытых кафе. Не забудьте солнцезащитный крем и головной убор.';
-            activity = city.season === 'Лето' ? 'Купание в озере' : 'Прогулка в парке';
-            clothing = 'Легкая одежда, панама';
-        } else if (city.temp > 18) {
-            recommendations = 'Теплая и приятная погода. Идеально для прогулок, велопоездок и встреч с друзьями на свежем воздухе.';
-            activity = city.season === 'Весна' ? 'Пикник с друзьями' : 'Велосипедная прогулка';
-            clothing = 'Футболка, ветровка';
-        } else if (city.temp > 10) {
-            recommendations = 'Прохладная погода. Хорошее время для посещения музеев, кафе и культурных мероприятий.';
-            activity = city.season === 'Осень' ? 'Сбор листьев для гербария' : 'Посещение выставки';
-            clothing = 'Свитер, куртка';
-        } else if (city.temp > 0) {
-            recommendations = 'Холодно. Рекомендуются активные виды отдыха или уютные домашние посиделки с горячим чаем.';
-            activity = city.season === 'Зима' ? 'Катание на коньках' : 'Домашний киновечер';
-            clothing = 'Теплая куртка, шапка';
-        } else {
-            recommendations = 'Морозная погода. Лучше оставаться в тепле. Отличный повод посетить сауну или горячие источники.';
-            activity = 'Посещение сауны';
-            clothing = 'Термобелье, пуховик';
-        }
-        
-        // Дополнительные рекомендации по типу погоды
-        if (city.description.includes('дождь') || city.description.includes('Гроза')) {
-            recommendations += ' Возьмите зонт или дождевик.';
-            activity = 'Чтение книги в кафе';
-        } else if (city.description.includes('Снег')) {
-            recommendations += ' Будьте осторожны на дорогах, возможен гололед. Идеально для зимних забав!';
-            activity = 'Лепка снеговика';
-            clothing = 'Теплая непромокаемая одежда';
-        } else if (city.description.includes('Туман')) {
-            recommendations += ' Будьте внимательны на дорогах, видимость ограничена.';
-            activity = 'Фотография в тумане';
-        }
-        
-        recommendationsCard.innerHTML = `
-            <h3 style="margin-bottom: 20px; color: var(--primary-color);">Рекомендации на сегодня</h3>
-            <p style="color: #555; line-height: 1.7; margin-bottom: 20px;">${recommendations}</p>
-            <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
-                <div style="display: flex; align-items: center; gap: 10px; background: rgba(93, 63, 211, 0.08); padding: 12px 15px; border-radius: 10px; flex: 1; min-width: 200px;">
-                    <i class="fas fa-tshirt" style="color: var(--primary-color);"></i>
-                    <div>
-                        <div style="font-weight: 600; font-size: 0.9rem;">Одежда</div>
-                        <div>${clothing}</div>
-                    </div>
-                </div>
-                <div style="display: flex; align-items: center; gap: 10px; background: rgba(93, 63, 211, 0.08); padding: 12px 15px; border-radius: 10px; flex: 1; min-width: 200px;">
-                    <i class="fas fa-hiking" style="color: var(--primary-color);"></i>
-                    <div>
-                        <div style="font-weight: 600; font-size: 0.9rem;">Активность</div>
-                        <div>${activity}</div>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-top: 20px; padding: 15px; background: rgba(255, 209, 102, 0.1); border-radius: 10px; border-left: 4px solid var(--accent-color);">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-lightbulb" style="color: var(--accent-color);"></i>
-                    <div>
-                        <div style="font-weight: 600;">Совет для ${city.season.toLowerCase()}:</div>
-                        <div>${city.season === 'Зима' ? 'Выпейте горячего какао' : city.season === 'Лето' ? 'Выпейте холодный лимонад' : city.season === 'Весна' ? 'Соберите весенний букет' : 'Насладитесь осенними красками'} — это идеально подходит для этого времени года!</div>
-                    </div>
-                </div>
-            </div>
-        `;
-        weatherContainer.appendChild(recommendationsCard);
-        
-        // Карточка с информацией об обновлении
-        const updateCard = document.createElement('div');
-        updateCard.className = 'weather-card';
-        updateCard.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-                <div style="width: 50px; height: 50px; border-radius: 12px; background: rgba(93, 63, 211, 0.1); display: flex; align-items: center; justify-content: center;">
-                    <i class="fas fa-sync-alt" style="color: var(--primary-color); font-size: 1.5rem;"></i>
-                </div>
-                <div>
-                    <h4 style="color: var(--primary-color); margin-bottom: 5px;">Ежедневное обновление</h4>
-                    <p style="color: #666; font-size: 0.9rem;">Погода автоматически меняется каждый день в 00:00</p>
-                </div>
-            </div>
-            <div style="background: rgba(93, 63, 211, 0.05); padding: 15px; border-radius: 10px; margin-top: 10px;">
-                <div style="font-size: 0.85rem; color: #666;">
-                    <i class="fas fa-info-circle"></i> 
-                    <strong>Как это работает:</strong> Погода генерируется с учетом времени года (${city.season.toLowerCase()}), поэтому снег бывает только при температуре 0°C или ниже, а гроза — только при температуре выше 15°C.
-                </div>
-            </div>
-        `;
-        weatherContainer.appendChild(updateCard);
-    }
-    
-    // Обработчик изменения города
-    citySelect.addEventListener('change', function() {
-        displayWeather(this.value);
-    });
-    
-    // Кнопка обновления погоды
-    const refreshWeatherBtn = document.createElement('button');
-    refreshWeatherBtn.className = 'btn btn-secondary';
-    refreshWeatherBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Обновить прогноз';
-    refreshWeatherBtn.style.marginLeft = '15px';
-    refreshWeatherBtn.addEventListener('click', function() {
-        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Обновление...';
-        
-        // Перегенерируем погоду для всех городов
-        weatherData['mouskinsk'] = generateDailyWeather(1, 'Мышкинск');
-        weatherData['listinsk'] = generateDailyWeather(2, 'Листинск');
-        weatherData['kosmos'] = generateDailyWeather(3, 'Космос');
-        weatherData['morozhensk'] = generateDailyWeather(4, 'Мороженск');
-        weatherData['ulyanovsk'] = generateDailyWeather(5, 'Ульяновск');
-        weatherData['barsuchye'] = generateDailyWeather(6, 'Барсучье');
-        weatherData['lisiy-ostrov'] = generateDailyWeather(7, 'Лисий Остров');
-        weatherData['yozhikovo'] = generateDailyWeather(8, 'Ёжиково');
-        weatherData['zaichiy-gorod'] = generateDailyWeather(9, 'Заячий Город');
-        
-        setTimeout(() => {
-            displayWeather(citySelect.value);
-            this.innerHTML = '<i class="fas fa-sync-alt"></i> Обновить прогноз';
-            
-            const notification = document.createElement('div');
-            notification.style.position = 'fixed';
-            notification.style.top = '100px';
-            notification.style.right = '20px';
-            notification.style.background = 'var(--gradient-primary)';
-            notification.style.color = 'white';
-            notification.style.padding = '15px 20px';
-            notification.style.borderRadius = '10px';
-            notification.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
-            notification.style.zIndex = '1000';
-            notification.innerHTML = '<i class="fas fa-check-circle"></i> Прогноз погоды обновлен!';
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
-        }, 800);
-    });
-    
-    // Добавляем кнопку в app-actions раздела погоды
-    const weatherSection = document.getElementById('weather');
-    const appActions = weatherSection.querySelector('.app-actions');
-    appActions.appendChild(refreshWeatherBtn);
-    
-    // Инициализация
-    displayWeather();
-    
-    // Автоматическое обновление погоды при загрузке (если прошли сутки)
-    const lastWeatherUpdate = localStorage.getItem('lastWeatherUpdate');
-    const today = new Date().toDateString();
-    
-    if (!lastWeatherUpdate || lastWeatherUpdate !== today) {
-        localStorage.setItem('lastWeatherUpdate', today);
-    }
-}
+            // Данные о погоде для городов Зверяндии (генерируются ежедневно)
+            const weatherData = {
+                'mouskinsk': generateDailyWeather(1, 'Мышкинск'),
+                'listinsk': generateDailyWeather(2, 'Листинск'),
+                'kosmos': generateDailyWeather(3, 'Космос'),
+                'morozhensk': generateDailyWeather(4, 'Мороженск'),
+                'ulyanovsk': generateDailyWeather(5, 'Ульяновск'),
+                'barsuchye': generateDailyWeather(6, 'Барсучье'),
+                'lisiy-ostrov': generateDailyWeather(7, 'Лисий Остров'),
+                'yozhikovo': generateDailyWeather(8, 'Ёжиково'),
+                'zaichiy-gorod': generateDailyWeather(9, 'Заячий Город')
+            };
             
             function displayWeather(cityId = 'mouskinsk') {
                 const city = weatherData[cityId];
@@ -3030,6 +2761,7 @@ function initWeather() {
                                 <div class="forecast-day-name">${day.day}</div>
                                 <div class="forecast-icon"><i class="fas ${day.icon}"></i></div>
                                 <div class="forecast-temp">${day.temp}°C</div>
+                                <div class="forecast-desc">${day.description}</div>
                             </div>
                         `).join('')}
                     </div>
@@ -3124,7 +2856,7 @@ function initWeather() {
                     <div style="background: rgba(93, 63, 211, 0.05); padding: 15px; border-radius: 10px; margin-top: 10px;">
                         <div style="font-size: 0.85rem; color: #666;">
                             <i class="fas fa-info-circle"></i> 
-                            <strong>Как это работает:</strong> Прогноз генерируется на основе текущей даты и названия города, поэтому погода будет разной каждый день для каждого города!
+                            <strong>Как это работает:</strong> Погода генерируется на основе текущей даты и названия города, поэтому прогноз логически связан и не содержит противоречий!
                         </div>
                     </div>
                 `;
@@ -3192,7 +2924,6 @@ function initWeather() {
             const today = new Date().toDateString();
             
             if (!lastWeatherUpdate || lastWeatherUpdate !== today) {
-                // Прошло более суток - генерируем новую погоду
                 localStorage.setItem('lastWeatherUpdate', today);
             }
         }
