@@ -1568,7 +1568,7 @@
                             <i class="fas fa-cloud-sun"></i>
                         </div>
                         <h4>Погода в Зверяндии</h4>
-                        <p>Актуальный прогноз погоды для всех городов Зверяндии. Планируйте свои приключения с учетом погодных условий.</p>
+                        <p>Актуальный прогноз погоды для всех городов Зверяндии. <strong>Погода меняется каждый день!</strong> Обновляется автоматически.</p>
                         <a href="#" class="btn btn-secondary" data-section="weather">Открыть</a>
                     </div>
                 </div>
@@ -2516,184 +2516,100 @@
             displayNews();
         }
         
-        // ==================== ПОГОДА ====================
+        // ==================== ПОГОДА (ЕЖЕДНЕВНО МЕНЯЮЩАЯСЯ) ====================
         function initWeather() {
             const weatherContainer = document.getElementById('weatherContainer');
             const citySelect = document.getElementById('citySelect');
             
-            // Данные о погоде для городов Зверяндии
-            const weatherData = {
-                'mouskinsk': {
-                    name: 'Мышкинск',
-                    temp: 18,
-                    feelsLike: 17,
-                    description: 'Солнечно',
-                    icon: 'fa-sun',
-                    humidity: 65,
-                    wind: 12,
-                    pressure: 1013,
-                    forecast: [
-                        { day: 'Пн', temp: 20, icon: 'fa-sun' },
-                        { day: 'Вт', temp: 19, icon: 'fa-cloud-sun' },
-                        { day: 'Ср', temp: 17, icon: 'fa-cloud' },
-                        { day: 'Чт', temp: 16, icon: 'fa-cloud-rain' },
-                        { day: 'Пт', temp: 18, icon: 'fa-cloud-sun' },
-                        { day: 'Сб', temp: 21, icon: 'fa-sun' },
-                        { day: 'Вс', temp: 22, icon: 'fa-sun' }
-                    ]
-                },
-                'listinsk': {
-                    name: 'Листинск',
-                    temp: 16,
-                    feelsLike: 15,
-                    description: 'Легкий дождь',
-                    icon: 'fa-cloud-rain',
-                    humidity: 80,
-                    wind: 8,
-                    pressure: 1012,
-                    forecast: [
-                        { day: 'Пн', temp: 15, icon: 'fa-cloud-rain' },
-                        { day: 'Вт', temp: 16, icon: 'fa-cloud' },
-                        { day: 'Ср', temp: 17, icon: 'fa-cloud-sun' },
-                        { day: 'Чт', temp: 18, icon: 'fa-sun' },
-                        { day: 'Пт', temp: 19, icon: 'fa-sun' },
-                        { day: 'Сб', temp: 20, icon: 'fa-sun' },
-                        { day: 'Вс', temp: 19, icon: 'fa-cloud-sun' }
-                    ]
-                },
-                'kosmos': {
-                    name: 'Космос',
-                    temp: 22,
-                    feelsLike: 21,
-                    description: 'Ясно',
-                    icon: 'fa-sun',
-                    humidity: 45,
-                    wind: 5,
-                    pressure: 1010,
-                    forecast: [
-                        { day: 'Пн', temp: 23, icon: 'fa-sun' },
-                        { day: 'Вт', temp: 24, icon: 'fa-sun' },
-                        { day: 'Ср', temp: 25, icon: 'fa-sun' },
-                        { day: 'Чт', temp: 24, icon: 'fa-sun' },
-                        { day: 'Пт', temp: 23, icon: 'fa-sun' },
-                        { day: 'Сб', temp: 22, icon: 'fa-sun' },
-                        { day: 'Вс', temp: 21, icon: 'fa-cloud-sun' }
-                    ]
-                },
-                'morozhensk': {
-                    name: 'Мороженск',
-                    temp: 5,
-                    feelsLike: 2,
-                    description: 'Снег',
-                    icon: 'fa-snowflake',
-                    humidity: 85,
-                    wind: 15,
-                    pressure: 1020,
-                    forecast: [
-                        { day: 'Пн', temp: 4, icon: 'fa-snowflake' },
-                        { day: 'Вт', temp: 3, icon: 'fa-snowflake' },
-                        { day: 'Ср', temp: 2, icon: 'fa-snowflake' },
-                        { day: 'Чт', temp: 3, icon: 'fa-cloud' },
-                        { day: 'Пт', temp: 5, icon: 'fa-cloud-sun' },
-                        { day: 'Сб', temp: 6, icon: 'fa-cloud-sun' },
-                        { day: 'Вс', temp: 7, icon: 'fa-cloud-sun' }
-                    ]
-                },
-                'ulyanovsk': {
-                    name: 'Ульяновск',
-                    temp: 14,
-                    feelsLike: 13,
-                    description: 'Пасмурно',
-                    icon: 'fa-cloud',
-                    humidity: 75,
-                    wind: 10,
-                    pressure: 1015,
-                    forecast: [
-                        { day: 'Пн', temp: 13, icon: 'fa-cloud' },
-                        { day: 'Вт', temp: 14, icon: 'fa-cloud-rain' },
-                        { day: 'Ср', temp: 15, icon: 'fa-cloud' },
-                        { day: 'Чт', temp: 16, icon: 'fa-cloud-sun' },
-                        { day: 'Пт', temp: 17, icon: 'fa-sun' },
-                        { day: 'Сб', temp: 18, icon: 'fa-sun' },
-                        { day: 'Вс', temp: 17, icon: 'fa-cloud-sun' }
-                    ]
-                },
-                'barsuchye': {
-                    name: 'Барсучье',
-                    temp: 15,
-                    feelsLike: 14,
-                    description: 'Облачно',
-                    icon: 'fa-cloud',
-                    humidity: 75,
-                    wind: 8,
-                    pressure: 1015,
-                    forecast: [
-                        { day: 'Пн', temp: 16, icon: 'fa-cloud' },
-                        { day: 'Вт', temp: 14, icon: 'fa-cloud-rain' },
-                        { day: 'Ср', temp: 13, icon: 'fa-cloud-rain' },
-                        { day: 'Чт', temp: 15, icon: 'fa-cloud' },
-                        { day: 'Пт', temp: 16, icon: 'fa-cloud-sun' },
-                        { day: 'Сб', temp: 18, icon: 'fa-sun' },
-                        { day: 'Вс', temp: 19, icon: 'fa-sun' }
-                    ]
-                },
-                'lisiy-ostrov': {
-                    name: 'Лисий Остров',
-                    temp: 20,
-                    feelsLike: 19,
-                    description: 'Ясно',
-                    icon: 'fa-sun',
-                    humidity: 60,
-                    wind: 10,
-                    pressure: 1012,
-                    forecast: [
-                        { day: 'Пн', temp: 21, icon: 'fa-sun' },
-                        { day: 'Вт', temp: 22, icon: 'fa-sun' },
-                        { day: 'Ср', temp: 19, icon: 'fa-cloud-sun' },
-                        { day: 'Чт', temp: 18, icon: 'fa-cloud' },
-                        { day: 'Пт', temp: 20, icon: 'fa-sun' },
-                        { day: 'Сб', temp: 23, icon: 'fa-sun' },
-                        { day: 'Вс', temp: 24, icon: 'fa-sun' }
-                    ]
-                },
-                'yozhikovo': {
-                    name: 'Ёжиково',
-                    temp: 16,
-                    feelsLike: 15,
-                    description: 'Небольшая облачность',
-                    icon: 'fa-cloud-sun',
-                    humidity: 70,
-                    wind: 6,
-                    pressure: 1014,
-                    forecast: [
-                        { day: 'Пн', temp: 17, icon: 'fa-cloud-sun' },
-                        { day: 'Вт', temp: 16, icon: 'fa-cloud' },
-                        { day: 'Ср', temp: 15, icon: 'fa-cloud-rain' },
-                        { day: 'Чт', temp: 16, icon: 'fa-cloud-sun' },
-                        { day: 'Пт', temp: 18, icon: 'fa-sun' },
-                        { day: 'Сб', temp: 19, icon: 'fa-sun' },
-                        { day: 'Вс', temp: 20, icon: 'fa-sun' }
-                    ]
-                },
-                'zaichiy-gorod': {
-                    name: 'Заячий Город',
-                    temp: 14,
-                    feelsLike: 13,
-                    description: 'Пасмурно',
-                    icon: 'fa-cloud',
-                    humidity: 80,
-                    wind: 5,
-                    pressure: 1016,
-                    forecast: [
-                        { day: 'Пн', temp: 15, icon: 'fa-cloud' },
-                        { day: 'Вт', temp: 14, icon: 'fa-cloud-rain' },
-                        { day: 'Ср', temp: 13, icon: 'fa-cloud-rain' },
-                        { day: 'Чт', temp: 14, icon: 'fa-cloud' },
-                        { day: 'Пт', temp: 15, icon: 'fa-cloud-sun' },
-                        { day: 'Сб', temp: 16, icon: 'fa-sun' },
-                        { day: 'Вс', temp: 17, icon: 'fa-sun' }
-                    ]
+            // Функция для генерации случайной погоды на основе даты
+            function generateDailyWeather(cityId, cityName) {
+                // Используем текущую дату для генерации уникальной погоды каждый день
+                const today = new Date();
+                const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+                
+                // Создаем уникальный seed для каждого города на основе дня года и названия города
+                const seed = dayOfYear * cityName.length + cityName.charCodeAt(0);
+                
+                // Генерация температуры на основе seed (разная для каждого города)
+                const baseTemp = 15 + (seed % 15); // От 15 до 30 градусов
+                const dailyVariation = Math.sin(dayOfYear * 0.1) * 5; // Плавное изменение по дням
+                const temp = Math.round(baseTemp + dailyVariation);
+                
+                // Определение типа погоды на основе seed и дня
+                const weatherTypes = [
+                    { description: 'Солнечно', icon: 'fa-sun', humidity: 40 + (seed % 30), wind: 5 + (seed % 10) },
+                    { description: 'Облачно', icon: 'fa-cloud', humidity: 60 + (seed % 25), wind: 8 + (seed % 7) },
+                    { description: 'Легкий дождь', icon: 'fa-cloud-rain', humidity: 75 + (seed % 20), wind: 10 + (seed % 10) },
+                    { description: 'Гроза', icon: 'fa-bolt', humidity: 80 + (seed % 15), wind: 15 + (seed % 10) },
+                    { description: 'Туман', icon: 'fa-smog', humidity: 85 + (seed % 10), wind: 3 + (seed % 5) },
+                    { description: 'Снег', icon: 'fa-snowflake', humidity: 70 + (seed % 20), wind: 12 + (seed % 8) },
+                    { description: 'Переменная облачность', icon: 'fa-cloud-sun', humidity: 50 + (seed % 25), wind: 7 + (seed % 8) }
+                ];
+                
+                const weatherIndex = (seed + dayOfYear) % weatherTypes.length;
+                const weatherType = weatherTypes[weatherIndex];
+                
+                // Давление меняется в зависимости от погоды
+                let pressure = 1013;
+                if (weatherType.description.includes('дождь') || weatherType.description.includes('Гроза')) {
+                    pressure = 1000 + (seed % 15);
+                } else if (weatherType.description.includes('Солнечно')) {
+                    pressure = 1020 + (seed % 10);
+                } else {
+                    pressure = 1010 + (seed % 15);
                 }
+                
+                // Температура ощущается (с учетом влажности и ветра)
+                let feelsLike = temp;
+                if (weatherType.humidity > 70) {
+                    feelsLike = temp + 2; // При высокой влажности кажется жарче
+                }
+                if (weatherType.wind > 10) {
+                    feelsLike = temp - 3; // При сильном ветре кажется холоднее
+                }
+                
+                // Генерация прогноза на неделю
+                const forecast = [];
+                const daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+                
+                for (let i = 0; i < 7; i++) {
+                    const forecastSeed = (seed + i * 7) % 100;
+                    const forecastTemp = temp + Math.sin(dayOfYear * 0.1 + i * 0.5) * 3;
+                    const forecastWeatherIndex = (weatherIndex + i) % weatherTypes.length;
+                    const forecastWeatherType = weatherTypes[forecastWeatherIndex];
+                    
+                    forecast.push({
+                        day: daysOfWeek[i],
+                        temp: Math.round(forecastTemp),
+                        icon: forecastWeatherType.icon
+                    });
+                }
+                
+                return {
+                    name: cityName,
+                    temp: Math.round(temp),
+                    feelsLike: Math.round(feelsLike),
+                    description: weatherType.description,
+                    icon: weatherType.icon,
+                    humidity: weatherType.humidity,
+                    wind: weatherType.wind,
+                    pressure: pressure,
+                    forecast: forecast,
+                    lastUpdated: today.toLocaleDateString('ru-RU')
+                };
+            }
+            
+            // Данные о погоде для городов Зверяндии (генерируются ежедневно)
+            const weatherData = {
+                'mouskinsk': generateDailyWeather(1, 'Мышкинск'),
+                'listinsk': generateDailyWeather(2, 'Листинск'),
+                'kosmos': generateDailyWeather(3, 'Космос'),
+                'morozhensk': generateDailyWeather(4, 'Мороженск'),
+                'ulyanovsk': generateDailyWeather(5, 'Ульяновск'),
+                'barsuchye': generateDailyWeather(6, 'Барсучье'),
+                'lisiy-ostrov': generateDailyWeather(7, 'Лисий Остров'),
+                'yozhikovo': generateDailyWeather(8, 'Ёжиково'),
+                'zaichiy-gorod': generateDailyWeather(9, 'Заячий Город')
             };
             
             function displayWeather(cityId = 'mouskinsk') {
@@ -2710,6 +2626,9 @@
                         <div class="weather-location">
                             <h3>${city.name}, Зверяндия</h3>
                             <div class="weather-date">${new Date().toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' })}</div>
+                            <div style="font-size: 0.8rem; opacity: 0.8; margin-top: 5px;">
+                                <i class="fas fa-sync-alt"></i> Обновлено сегодня
+                            </div>
                         </div>
                         <div class="weather-icon">
                             <i class="fas ${city.icon}"></i>
@@ -2762,7 +2681,12 @@
                 const forecastCard = document.createElement('div');
                 forecastCard.className = 'weather-card';
                 forecastCard.innerHTML = `
-                    <h3 style="margin-bottom: 20px; color: var(--primary-color);">Прогноз на неделю</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="color: var(--primary-color);">Прогноз на неделю</h3>
+                        <div style="font-size: 0.85rem; color: #666;">
+                            <i class="fas fa-calendar-alt"></i> ${new Date().toLocaleDateString('ru-RU', { month: 'long' })}
+                        </div>
+                    </div>
                     <div class="forecast-container">
                         ${city.forecast.map(day => `
                             <div class="forecast-day">
@@ -2772,6 +2696,9 @@
                             </div>
                         `).join('')}
                     </div>
+                    <div style="margin-top: 15px; font-size: 0.85rem; color: #666; text-align: center;">
+                        <i class="fas fa-info-circle"></i> Прогноз обновляется ежедневно
+                    </div>
                 `;
                 weatherContainer.appendChild(forecastCard);
                 
@@ -2780,35 +2707,91 @@
                 recommendationsCard.className = 'weather-card';
                 
                 let recommendations = '';
-                if (city.temp > 20) {
-                    recommendations = 'Идеальная погода для путешествий и приключений! Отличный день для посещения парков и открытых пространств.';
+                let activity = '';
+                let clothing = '';
+                
+                if (city.temp > 25) {
+                    recommendations = 'Жаркая погода! Отличный день для посещения пляжей, парков и открытых кафе. Не забудьте солнцезащитный крем и головной убор.';
+                    activity = 'Пикник у озера';
+                    clothing = 'Легкая одежда, панама';
+                } else if (city.temp > 18) {
+                    recommendations = 'Теплая и приятная погода. Идеально для прогулок, велопоездок и встреч с друзьями на свежем воздухе.';
+                    activity = 'Прогулка в парке';
+                    clothing = 'Футболка, ветровка';
                 } else if (city.temp > 10) {
-                    recommendations = 'Хорошая погода для прогулок и встреч с друзьями. Можно планировать outdoor-мероприятия.';
+                    recommendations = 'Прохладная погода. Хорошее время для посещения музеев, кафе и культурных мероприятий.';
+                    activity = 'Посещение выставки';
+                    clothing = 'Свитер, куртка';
                 } else if (city.temp > 0) {
-                    recommendations = 'Прохладно. Рекомендуется теплая одежда для прогулок. Отличное время для посещения музеев и кафе.';
+                    recommendations = 'Холодно. Рекомендуются активные виды отдыха или уютные домашние посиделки с горячим чаем.';
+                    activity = 'Домашний киновечер';
+                    clothing = 'Теплая куртка, шапка';
                 } else {
-                    recommendations = 'Холодно. Рекомендуется оставаться в теплых помещениях или одеваться очень тепло. Идеальный день для домашних посиделок с чаем.';
+                    recommendations = 'Морозная погода. Лучше оставаться в тепле. Отличный повод посетить сауну или горячие источники.';
+                    activity = 'Посещение сауны';
+                    clothing = 'Термобелье, пуховик';
                 }
                 
-                if (city.description.includes('дождь') || city.description.includes('снег')) {
-                    recommendations += ' Ожидаются осадки, не забудьте зонт или дождевик.';
+                if (city.description.includes('дождь') || city.description.includes('Гроза')) {
+                    recommendations += ' Возьмите зонт или дождевик.';
+                } else if (city.description.includes('Снег')) {
+                    recommendations += ' Будьте осторожны на дорогах, возможен гололед.';
+                } else if (city.description.includes('Туман')) {
+                    recommendations += ' Будьте внимательны на дорогах, видимость ограничена.';
                 }
                 
                 recommendationsCard.innerHTML = `
-                    <h3 style="margin-bottom: 20px; color: var(--primary-color);">Рекомендации для жителей</h3>
-                    <p style="color: #555; line-height: 1.7;">${recommendations}</p>
-                    <div style="display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap;">
-                        <div style="display: flex; align-items: center; gap: 10px; background: rgba(93, 63, 211, 0.08); padding: 12px 15px; border-radius: 10px;">
-                            <i class="fas fa-umbrella" style="color: var(--primary-color);"></i>
-                            <span>Прогулки: ${city.temp > 5 ? 'Рекомендуются' : 'Ограничены'}</span>
+                    <h3 style="margin-bottom: 20px; color: var(--primary-color);">Рекомендации на сегодня</h3>
+                    <p style="color: #555; line-height: 1.7; margin-bottom: 20px;">${recommendations}</p>
+                    <div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 10px; background: rgba(93, 63, 211, 0.08); padding: 12px 15px; border-radius: 10px; flex: 1; min-width: 200px;">
+                            <i class="fas fa-tshirt" style="color: var(--primary-color);"></i>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.9rem;">Одежда</div>
+                                <div>${clothing}</div>
+                            </div>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 10px; background: rgba(93, 63, 211, 0.08); padding: 12px 15px; border-radius: 10px;">
-                            <i class="fas fa-mug-hot" style="color: var(--primary-color);"></i>
-                            <span>Напитки: ${city.temp > 15 ? 'Холодные' : 'Горячие'}</span>
+                        <div style="display: flex; align-items: center; gap: 10px; background: rgba(93, 63, 211, 0.08); padding: 12px 15px; border-radius: 10px; flex: 1; min-width: 200px;">
+                            <i class="fas fa-hiking" style="color: var(--primary-color);"></i>
+                            <div>
+                                <div style="font-weight: 600; font-size: 0.9rem;">Активность</div>
+                                <div>${activity}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(255, 209, 102, 0.1); border-radius: 10px; border-left: 4px solid var(--accent-color);">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-lightbulb" style="color: var(--accent-color);"></i>
+                            <div>
+                                <div style="font-weight: 600;">Совет дня:</div>
+                                <div>${city.temp > 20 ? 'Выпейте холодный лимонад' : city.temp > 10 ? 'Насладитесь прогулкой' : 'Заварите горячий травяной чай'} — это идеально подходит для сегодняшней погоды!</div>
+                            </div>
                         </div>
                     </div>
                 `;
                 weatherContainer.appendChild(recommendationsCard);
+                
+                // Карточка с информацией об обновлении
+                const updateCard = document.createElement('div');
+                updateCard.className = 'weather-card';
+                updateCard.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                        <div style="width: 50px; height: 50px; border-radius: 12px; background: rgba(93, 63, 211, 0.1); display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-sync-alt" style="color: var(--primary-color); font-size: 1.5rem;"></i>
+                        </div>
+                        <div>
+                            <h4 style="color: var(--primary-color); margin-bottom: 5px;">Ежедневное обновление</h4>
+                            <p style="color: #666; font-size: 0.9rem;">Погода автоматически меняется каждый день в 00:00</p>
+                        </div>
+                    </div>
+                    <div style="background: rgba(93, 63, 211, 0.05); padding: 15px; border-radius: 10px; margin-top: 10px;">
+                        <div style="font-size: 0.85rem; color: #666;">
+                            <i class="fas fa-info-circle"></i> 
+                            <strong>Как это работает:</strong> Прогноз генерируется на основе текущей даты и названия города, поэтому погода будет разной каждый день для каждого города!
+                        </div>
+                    </div>
+                `;
+                weatherContainer.appendChild(updateCard);
             }
             
             // Обработчик изменения города
@@ -2816,8 +2799,65 @@
                 displayWeather(this.value);
             });
             
+            // Кнопка обновления погоды (для демонстрации)
+            const refreshWeatherBtn = document.createElement('button');
+            refreshWeatherBtn.className = 'btn btn-secondary';
+            refreshWeatherBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Обновить прогноз';
+            refreshWeatherBtn.style.marginLeft = '15px';
+            refreshWeatherBtn.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Обновление...';
+                
+                // Перегенерируем погоду для всех городов
+                weatherData['mouskinsk'] = generateDailyWeather(1, 'Мышкинск');
+                weatherData['listinsk'] = generateDailyWeather(2, 'Листинск');
+                weatherData['kosmos'] = generateDailyWeather(3, 'Космос');
+                weatherData['morozhensk'] = generateDailyWeather(4, 'Мороженск');
+                weatherData['ulyanovsk'] = generateDailyWeather(5, 'Ульяновск');
+                weatherData['barsuchye'] = generateDailyWeather(6, 'Барсучье');
+                weatherData['lisiy-ostrov'] = generateDailyWeather(7, 'Лисий Остров');
+                weatherData['yozhikovo'] = generateDailyWeather(8, 'Ёжиково');
+                weatherData['zaichiy-gorod'] = generateDailyWeather(9, 'Заячий Город');
+                
+                setTimeout(() => {
+                    displayWeather(citySelect.value);
+                    this.innerHTML = '<i class="fas fa-sync-alt"></i> Обновить прогноз';
+                    
+                    // Показываем уведомление об обновлении
+                    const notification = document.createElement('div');
+                    notification.style.position = 'fixed';
+                    notification.style.top = '100px';
+                    notification.style.right = '20px';
+                    notification.style.background = 'var(--gradient-primary)';
+                    notification.style.color = 'white';
+                    notification.style.padding = '15px 20px';
+                    notification.style.borderRadius = '10px';
+                    notification.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+                    notification.style.zIndex = '1000';
+                    notification.innerHTML = '<i class="fas fa-check-circle"></i> Прогноз погоды обновлен!';
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 3000);
+                }, 800);
+            });
+            
+            // Добавляем кнопку в app-actions раздела погоды
+            const weatherSection = document.getElementById('weather');
+            const appActions = weatherSection.querySelector('.app-actions');
+            appActions.appendChild(refreshWeatherBtn);
+            
             // Инициализация
             displayWeather();
+            
+            // Автоматическое обновление погоды при загрузке (если прошли сутки)
+            const lastWeatherUpdate = localStorage.getItem('lastWeatherUpdate');
+            const today = new Date().toDateString();
+            
+            if (!lastWeatherUpdate || lastWeatherUpdate !== today) {
+                // Прошло более суток - генерируем новую погоду
+                localStorage.setItem('lastWeatherUpdate', today);
+            }
         }
         
         // ==================== КАЛЕНДАРЬ ====================
